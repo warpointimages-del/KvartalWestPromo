@@ -78,18 +78,12 @@ p {
     margin-bottom: 3rem;
 }
 
-/* Стиль для выделенных слов в параллелограмме */
-.highlight-wrapper {
-    display: inline-block;
-    position: relative;
-}
-
+/* Правильная фигура параллелограмма */
 .highlight {
-    background-color: #e23239;
-    padding: 0.3rem 1rem;
     position: relative;
-    z-index: 1;
     display: inline-block;
+    padding: 0.3rem 1rem;
+    z-index: 1;
 }
 
 .highlight::before {
@@ -125,14 +119,12 @@ p {
     gap: 0.8rem;
     color: #ffffff;
     text-decoration: none;
-    font-family: 'Bebas Neue Pro', sans-serif;
-    font-size: 1.5rem;
-    text-transform: uppercase;
+    font-family: 'Gilroy', sans-serif;
+    font-size: 1.1rem;
     padding: 1rem 2rem;
     border: 2px solid #e23239;
     transition: all 0.3s ease;
     margin: 2rem 0;
-    letter-spacing: 1px;
 }
 
 .location-link:hover {
@@ -140,8 +132,8 @@ p {
 }
 
 .location-link svg {
-    width: 24px;
-    height: 24px;
+    width: 20px;
+    height: 20px;
     fill: currentColor;
 }
 
@@ -166,10 +158,10 @@ footer {
     animation: fadeInLeft 0.8s ease forwards;
 }
 
-/* Анимации для фигур с задержкой */
-.highlight-wrapper {
+/* Задержка анимации только для фигур */
+.highlight::before {
     opacity: 0;
-    transform: translateX(50px);
+    transform: skew(-12deg) translateX(50px);
     animation: fadeInLeft 0.8s ease 0.5s forwards;
 }
 
@@ -191,7 +183,7 @@ footer {
 @media (prefers-reduced-motion: reduce) {
     .fade-in,
     .fade-in-left,
-    .highlight-wrapper {
+    .highlight::before {
         animation: none;
         opacity: 1;
         transform: none;
@@ -224,5 +216,9 @@ footer {
     
     .feature-card {
         padding: 2rem;
+    }
+    
+    .highlight {
+        padding: 0.2rem 0.8rem;
     }
 }
