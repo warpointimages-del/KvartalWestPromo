@@ -385,25 +385,18 @@ footer {
     }
 }
 /* Логотип */
-.header-content {
-    display: flex;
-    align-items: flex-start;
-    gap: 3rem;
-}
-
-.logo {
-    width: 200px;
+.logo-header {
+    width: 500px;
     height: auto;
-    flex-shrink: 0;
-    margin-top: 1rem;
+    margin-bottom: 3rem;
 }
 
 .header-text {
-    flex: 1;
+    width: 100%;
 }
 
 .logo-small {
-    width: 60px;
+    width: 120px;
     height: auto;
     margin-bottom: 1rem;
     opacity: 0.7;
@@ -411,17 +404,12 @@ footer {
 
 /* Адаптивность для логотипа */
 @media (max-width: 768px) {
-    .header-content {
-        flex-direction: column;
-        gap: 1.5rem;
-    }
-    
-    .logo {
-        width: 150px;
-        margin-top: 0;
+    .logo-header {
+        width: 300px;
+        margin-bottom: 2rem;
     }
     
     .logo-small {
-        width: 40px;
+        width: 80px;
     }
 }
