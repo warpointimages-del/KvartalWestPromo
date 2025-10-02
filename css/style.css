@@ -96,6 +96,8 @@ p {
     background-color: #e23239;
     transform: skew(-12deg);
     z-index: -1;
+    opacity: 0;
+    transform: skew(-12deg) translateX(50px);
 }
 
 /* Сетка преимуществ */
@@ -157,15 +159,15 @@ footer {
     transform: translateX(0);
 }
 
-/* Задержка анимации только для фигур */
+/* Задержка анимации только для фигур - СЛАЙД + ПРОЗРАЧНОСТЬ */
 .scroll-animate.visible .highlight::before {
-    opacity: 0;
-    animation: shapeAppear 0.8s ease 0.5s forwards;
+    animation: shapeSlideIn 0.8s ease 0.5s forwards;
 }
 
-@keyframes shapeAppear {
+@keyframes shapeSlideIn {
     to {
         opacity: 1;
+        transform: skew(-12deg) translateX(0);
     }
 }
 
@@ -180,6 +182,7 @@ footer {
     .scroll-animate.visible .highlight::before {
         animation: none;
         opacity: 1;
+        transform: skew(-12deg) translateX(0);
     }
 }
 
@@ -217,5 +220,9 @@ footer {
     
     .scroll-animate {
         transform: translateX(50px);
+    }
+    
+    .highlight::before {
+        transform: skew(-12deg) translateX(30px);
     }
 }
