@@ -176,61 +176,7 @@ footer {
     }
 }
 
-/* Отключение анимаций для пользователей, которые их предпочитают не использовать */
-@media (prefers-reduced-motion: reduce) {
-    .scroll-animate {
-        opacity: 1;
-        transform: none;
-        transition: none;
-    }
-    
-    .scroll-animate.visible .highlight::before {
-        animation: none;
-        opacity: 1;
-        transform: skew(-12deg) translateX(0);
-    }
-}
-
-/* Адаптивность */
-@media (max-width: 768px) {
-    body {
-        padding: 30px 15px;
-    }
-    
-    h1 {
-        font-size: 3.5rem;
-    }
-    
-    h2 {
-        font-size: 2.5rem;
-        margin: 3rem 0 1.5rem 0;
-    }
-    
-    h3 {
-        font-size: 2rem;
-    }
-    
-    .feature-grid {
-        grid-template-columns: 1fr;
-        gap: 2rem;
-    }
-    
-    .feature-card {
-        padding: 2rem;
-    }
-    
-    .highlight {
-        padding: 0.2rem 0.8rem;
-    }
-    
-    .scroll-animate {
-        transform: translateX(50px);
-    }
-    
-    .highlight::before {
-        transform: skew(-12deg) translateX(50px);
-    }
-
+/* Стили для зон VR */
 .zones {
     margin: 6rem 0;
 }
@@ -326,8 +272,66 @@ footer {
     }
 }
 
-/* Адаптивность для зон */
+/* Отключение анимаций для пользователей, которые их предпочитают не использовать */
+@media (prefers-reduced-motion: reduce) {
+    .scroll-animate {
+        opacity: 1;
+        transform: none;
+        transition: none;
+    }
+    
+    .scroll-animate.visible .highlight::before {
+        animation: none;
+        opacity: 1;
+        transform: skew(-12deg) translateX(0);
+    }
+    
+    .zone-item.active {
+        animation: none;
+    }
+}
+
+/* Адаптивность */
 @media (max-width: 768px) {
+    body {
+        padding: 30px 15px;
+    }
+    
+    h1 {
+        font-size: 3.5rem;
+    }
+    
+    h2 {
+        font-size: 2.5rem;
+        margin: 3rem 0 1.5rem 0;
+    }
+    
+    h3 {
+        font-size: 2rem;
+    }
+    
+    .feature-grid {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+    }
+    
+    .feature-card {
+        padding: 2rem;
+    }
+    
+    .highlight {
+        padding: 0.2rem 0.8rem;
+    }
+    
+    .scroll-animate {
+        transform: translateX(50px);
+    }
+    
+    .highlight::before {
+        transform: skew(-12deg) translateX(50px);
+    }
+    
+    /* Адаптивность для зон */
     .categories {
         flex-direction: column;
         max-width: 100%;
