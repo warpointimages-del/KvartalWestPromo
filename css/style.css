@@ -161,7 +161,7 @@ footer {
 /* Задержка анимации только для фигур */
 .highlight::before {
     opacity: 0;
-    transform: skew(-12deg) translateX(50px);
+    transform: translateX(50px);
     animation: fadeInLeft 0.8s ease 0.5s forwards;
 }
 
