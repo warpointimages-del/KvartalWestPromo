@@ -80,7 +80,7 @@
                 </div>
             </div>
         </section>
-        
+
         <section class="location scroll-animate">
             <h2>МЫ НАХОДИМСЯ ЗДЕСЬ</h2>
             <a href="https://yandex.ru/maps/-/CLByFGOk" class="location-link" target="_blank">
@@ -95,35 +95,36 @@
     <footer class="scroll-animate">
         <p class="secondary">© 2025 Все права защищены</p>
     </footer>
+
     <script>
-// Переключение категорий VR зон
-document.querySelectorAll('.category-btn').forEach(btn => {
-    btn.addEventListener('click', function() {
-        // Убираем активный класс у всех кнопок
-        document.querySelectorAll('.category-btn').forEach(b => b.classList.remove('active'));
-        // Добавляем активный класс нажатой кнопке
-        this.classList.add('active');
-        
-        // Скрываем все зоны
-        document.querySelectorAll('.zone-item').forEach(zone => zone.classList.remove('active'));
-        // Показываем выбранную зону
-        const category = this.getAttribute('data-category');
-        document.getElementById(`zone-${category}`).classList.add('active');
-    });
-});
+        // Переключение категорий VR зон
+        document.querySelectorAll('.category-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                // Убираем активный класс у всех кнопок
+                document.querySelectorAll('.category-btn').forEach(b => b.classList.remove('active'));
+                // Добавляем активный класс нажатой кнопке
+                this.classList.add('active');
+                
+                // Скрываем все зоны
+                document.querySelectorAll('.zone-item').forEach(zone => zone.classList.remove('active'));
+                // Показываем выбранную зону
+                const category = this.getAttribute('data-category');
+                document.getElementById(`zone-${category}`).classList.add('active');
+            });
+        });
 
-// Анимация при скролле
-const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-        if (entry.isIntersecting) {
-            entry.target.classList.add('visible');
-        }
-    });
-}, { threshold: 0.1 });
+        // Анимация при скролле
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, { threshold: 0.1 });
 
-document.querySelectorAll('.scroll-animate').forEach(el => {
-    observer.observe(el);
-});
-</script>
+        document.querySelectorAll('.scroll-animate').forEach(el => {
+            observer.observe(el);
+        });
+    </script>
 </body>
 </html>
