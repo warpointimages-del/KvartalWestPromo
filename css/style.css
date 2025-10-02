@@ -55,7 +55,7 @@ h2 {
 }
 
 h3 {
-    font-size: 2.5rem;
+    font-size: 3.5rem;
     margin-bottom: 1rem;
 }
 
@@ -112,7 +112,7 @@ p {
 .feature-card {
     background-color: #2a2a2a;
     padding: 2.5rem;
-    border: 1px solid #3a3a3a;
+    /* Убрали border */
 }
 
 /* Ссылка с иконкой локации */
@@ -125,7 +125,8 @@ p {
     font-family: 'Gilroy', sans-serif;
     font-size: 1.1rem;
     padding: 1rem 2rem;
-    border: 2px solid #e23239;
+    background-color: #262626;
+    border: none;
     transition: all 0.3s ease;
     margin: 2rem 0;
 }
@@ -144,7 +145,7 @@ p {
 footer {
     margin-top: 6rem;
     padding-top: 3rem;
-    border-top: 1px solid #3a3a3a;
+    /* Убрали border-top */
     text-align: center;
 }
 
@@ -160,9 +161,9 @@ footer {
     transform: translateX(0);
 }
 
-/* ФИКС: Анимация фигур - СЛАЙД ИЗ СПРАВА С ЗАДЕРЖКОЙ */
+/* ФИКС: Анимация фигур - СЛАЙД ИЗ СПРАВА С МЕНЬШЕЙ ЗАДЕРЖКОЙ */
 .scroll-animate.visible .highlight::before {
-    animation: shapeSlideIn 0.8s ease 0.5s forwards;
+    animation: shapeSlideIn 0.8s ease 0.3s forwards;
 }
 
 @keyframes shapeSlideIn {
@@ -251,11 +252,11 @@ footer {
     display: flex;
     flex-direction: column;
     justify-content: center;
-    border: 2px solid #262626;
+    /* Убрали border */
 }
 
 .zone-info h3 {
-    font-size: 2rem;
+    font-size: 3rem;
     margin-bottom: 1rem;
     color: #ffffff;
 }
@@ -315,7 +316,7 @@ footer {
     }
     
     h3 {
-        font-size: 2rem;
+        font-size: 2.5rem;
     }
     
     .feature-grid {
@@ -365,7 +366,7 @@ footer {
     }
     
     .zone-info h3 {
-        font-size: 1.5rem;
+        font-size: 2.2rem;
     }
     
     .zone-item.animate-in {
