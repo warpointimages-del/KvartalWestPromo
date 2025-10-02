@@ -183,7 +183,7 @@ footer {
 
 .categories {
     display: flex;
-    gap: 2rem;
+    gap: 0;
     margin-bottom: 3rem;
     justify-content: center;
 }
@@ -196,17 +196,20 @@ footer {
     border: 2px solid #3a3a3a;
     padding: 0.8rem 1.5rem;
     cursor: pointer;
-    transition: all 0.3s ease;
+    margin: 0 -1px;
+    position: relative;
 }
 
 .category-btn.active {
     background-color: #3970f6;
     border-color: #3970f6;
+    z-index: 2;
 }
 
 /* Контент зон */
 .zone-content {
     position: relative;
+    min-height: 200px;
 }
 
 .zone-item {
@@ -214,11 +217,18 @@ footer {
     grid-template-columns: 300px 1fr;
     gap: 0;
     align-items: start;
+    opacity: 0;
+    transform: translateX(100px);
+    transition: opacity 0.2s ease;
 }
 
 .zone-item.active {
     display: grid;
-    animation: fadeIn 0.3s ease;
+    opacity: 1;
+}
+
+.zone-item.animate-in {
+    animation: zoneSlideIn 0.8s ease forwards;
 }
 
 .zone-image {
@@ -251,12 +261,14 @@ footer {
     margin: 0;
 }
 
-@keyframes fadeIn {
-    from {
+@keyframes zoneSlideIn {
+    0% {
         opacity: 0;
+        transform: translateX(100px);
     }
-    to {
+    100% {
         opacity: 1;
+        transform: translateX(0);
     }
 }
 
@@ -274,8 +286,10 @@ footer {
         transform: skew(-12deg) translateX(0);
     }
     
-    .zone-item.active {
+    .zone-item.animate-in {
         animation: none;
+        opacity: 1;
+        transform: none;
     }
 }
 
@@ -328,6 +342,7 @@ footer {
     
     .category-btn {
         width: 200px;
+        margin: 0;
     }
     
     .zone-item {
@@ -346,5 +361,20 @@ footer {
     
     .zone-info h3 {
         font-size: 1.5rem;
+    }
+    
+    .zone-item.animate-in {
+        animation: zoneSlideInMobile 0.8s ease forwards;
+    }
+}
+
+@keyframes zoneSlideInMobile {
+    0% {
+        opacity: 0;
+        transform: translateX(50px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateX(0);
     }
 }
