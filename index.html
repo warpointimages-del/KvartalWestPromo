@@ -54,5 +54,19 @@
     <footer class="scroll-animate">
         <p class="secondary">© 2025 Все права защищены</p>
     </footer>
+    <script>
+// Простой скрипт для анимации при скролле
+const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+        if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+        }
+    });
+}, { threshold: 0.1 });
+
+document.querySelectorAll('.scroll-animate').forEach(el => {
+    observer.observe(el);
+});
+</script>
 </body>
 </html>
