@@ -145,48 +145,41 @@ footer {
     text-align: center;
 }
 
-/* Анимации появления */
-.fade-in {
-    opacity: 0;
-    transform: translateY(30px);
-    animation: fadeInUp 0.8s ease forwards;
-}
-
-.fade-in-left {
+/* Анимации появления при скролле */
+.scroll-animate {
     opacity: 0;
     transform: translateX(100px);
-    animation: fadeInLeft 0.8s ease forwards;
+    transition: all 0.8s ease;
+}
+
+.scroll-animate.visible {
+    opacity: 1;
+    transform: translateX(0);
 }
 
 /* Задержка анимации только для фигур */
-.highlight::before {
+.scroll-animate.visible .highlight::before {
     opacity: 0;
-    transform: translateX(50px);
-    animation: fadeInLeft 0.8s ease 0.5s forwards;
+    animation: shapeAppear 0.8s ease 0.5s forwards;
 }
 
-@keyframes fadeInUp {
+@keyframes shapeAppear {
     to {
         opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-@keyframes fadeInLeft {
-    to {
-        opacity: 1;
-        transform: translateX(0);
     }
 }
 
 /* Отключение анимаций для пользователей, которые их предпочитают не использовать */
 @media (prefers-reduced-motion: reduce) {
-    .fade-in,
-    .fade-in-left,
-    .highlight::before {
-        animation: none;
+    .scroll-animate {
         opacity: 1;
         transform: none;
+        transition: none;
+    }
+    
+    .scroll-animate.visible .highlight::before {
+        animation: none;
+        opacity: 1;
     }
 }
 
@@ -220,5 +213,9 @@ footer {
     
     .highlight {
         padding: 0.2rem 0.8rem;
+    }
+    
+    .scroll-animate {
+        transform: translateX(50px);
     }
 }
