@@ -90,48 +90,48 @@
         <p class="secondary">© 2025 Все права защищены</p>
     </footer>
 
-    <script>
-        // Переключение категорий VR зон
-        document.querySelectorAll('.category-btn').forEach(btn => {
-            btn.addEventListener('click', function() {
-                // Убираем активный класс у всех кнопок
-                document.querySelectorAll('.category-btn').forEach(b => b.classList.remove('active'));
-                // Добавляем активный класс нажатой кнопке
-                this.classList.add('active');
-                
-                // Скрываем все зоны
-                document.querySelectorAll('.zone-item').forEach(zone => {
-                    zone.classList.remove('active');
-                    zone.classList.remove('animate-in');
-                });
-                
-                // Показываем выбранную зону
-                const category = this.getAttribute('data-category');
-                const targetZone = document.getElementById(`zone-${category}`);
-                const hasAnimated = targetZone.getAttribute('data-animated') === 'true';
-                
-                targetZone.classList.add('active');
-                
-                // Анимируем только если зона ещё не анимировалась
-                if (!hasAnimated) {
-                    targetZone.classList.add('animate-in');
-                    targetZone.setAttribute('data-animated', 'true');
-                }
+<script>
+    // Переключение категорий VR зон
+    document.querySelectorAll('.category-btn').forEach(btn => {
+        btn.addEventListener('click', function() {
+            // Убираем активный класс у всех кнопок
+            document.querySelectorAll('.category-btn').forEach(b => b.classList.remove('active'));
+            // Добавляем активный класс нажатой кнопке
+            this.classList.add('active');
+            
+            // Скрываем все зоны
+            document.querySelectorAll('.zone-item').forEach(zone => {
+                zone.classList.remove('active');
+                zone.classList.remove('animate-in');
             });
+            
+            // Показываем выбранную зону
+            const category = this.getAttribute('data-category');
+            const targetZone = document.getElementById(`zone-${category}`);
+            const hasAnimated = targetZone.getAttribute('data-animated') === 'true';
+            
+            targetZone.classList.add('active');
+            
+            // Анимируем только если зона ещё не анимировалась
+            if (!hasAnimated) {
+                targetZone.classList.add('animate-in');
+                targetZone.setAttribute('data-animated', 'true');
+            }
         });
+    });
 
-        // Анимация при скролле
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('visible');
-                }
-            });
-        }, { threshold: 0.1 });
-
-        document.querySelectorAll('.scroll-animate').forEach(el => {
-            observer.observe(el);
+    // Анимация при скролле
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('visible');
+            }
         });
-    </script>
+    }, { threshold: 0.1 });
+
+    document.querySelectorAll('.scroll-animate').forEach(el => {
+        observer.observe(el);
+    });
+</script>
 </body>
 </html>
