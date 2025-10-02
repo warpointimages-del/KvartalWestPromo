@@ -192,12 +192,13 @@ footer {
     font-family: 'Gilroy', sans-serif;
     font-size: 1rem;
     color: #ffffff;
-    background: none;
+    background-color: #262626;
     border: 2px solid #3a3a3a;
     padding: 0.8rem 1.5rem;
     cursor: pointer;
     margin: 0 -1px;
     position: relative;
+    transition: all 0.3s ease;
 }
 
 .category-btn.active {
@@ -217,18 +218,21 @@ footer {
     grid-template-columns: 300px 1fr;
     gap: 0;
     align-items: start;
-    opacity: 0;
-    transform: translateX(100px);
-    transition: opacity 0.2s ease;
 }
 
 .zone-item.active {
     display: grid;
-    opacity: 1;
 }
 
 .zone-item.animate-in {
+    opacity: 0;
+    transform: translateX(100px);
     animation: zoneSlideIn 0.8s ease forwards;
+}
+
+.zone-item:not(.animate-in) {
+    opacity: 1;
+    transform: translateX(0);
 }
 
 .zone-image {
@@ -333,39 +337,38 @@ footer {
         transform: skew(-12deg) translateX(50px);
     }
     
-    /* Адаптивность для зон */
-    .categories {
-        flex-direction: column;
-        align-items: center;
-        gap: 1rem;
-    }
-    
-    .category-btn {
-        width: 200px;
-        margin: 0;
-    }
-    
-    .zone-item {
-        grid-template-columns: 1fr;
-    }
-    
-    .zone-image {
-        width: 100%;
-        height: 150px;
-    }
-    
-    .zone-info {
-        height: auto;
-        padding: 1.5rem;
-    }
-    
-    .zone-info h3 {
-        font-size: 1.5rem;
-    }
-    
-    .zone-item.animate-in {
-        animation: zoneSlideInMobile 0.8s ease forwards;
-    }
+/* Адаптивность для зон */
+.categories {
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+}
+
+.category-btn {
+    width: 200px;
+    margin: 0;
+}
+
+.zone-item {
+    grid-template-columns: 1fr;
+}
+
+.zone-image {
+    width: 100%;
+    height: 150px;
+}
+
+.zone-info {
+    height: auto;
+    padding: 1.5rem;
+}
+
+.zone-info h3 {
+    font-size: 1.5rem;
+}
+
+.zone-item.animate-in {
+    animation: zoneSlideInMobile 0.8s ease forwards;
 }
 
 @keyframes zoneSlideInMobile {
