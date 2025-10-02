@@ -3,56 +3,58 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Мое Веб-Приложение</title>
+    <title>Карточка Kvartal West</title>
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-    <header>
-        <h1>Добро пожаловать в наше <span class="highlight">приложение</span></h1>
+    <header class="fade-in">
+        <h1>ДОБРО ПОЖАЛОВАТЬ В НАШУ <span class="highlight-wrapper"><span class="highlight">КАРТЧКУ</span></span></h1>
         <p class="subtitle">Лучший сервис для ваших нужд</p>
     </header>
 
     <main>
-        <section class="intro">
-            <h2>О нашем <span class="highlight">проекте</span></h2>
-            <p>Это демонстрационная страница с использованием ваших шрифтов Bebas Neue Pro и Gilroy.</p>
+        <section class="intro fade-in-left">
+            <h2>О НАШЕЙ <span class="highlight-wrapper"><span class="highlight">КАРТОЧКЕ</span></span></h2>
+            <p>Это демонстрационная страница с использованием основных шрифтов WARPOINT - Bebas Neue Pro и Gilroy.</p>
             <p class="secondary">Здесь вы можете увидеть примеры использования разных стилей текста.</p>
         </section>
 
         <section class="features">
-            <h2>Наши <span class="highlight">преимущества</span></h2>
+            <h2 class="fade-in-left">НАШИ <span class="highlight-wrapper"><span class="highlight">ПРЕИМУЩЕСТВА</span></span></h2>
             <div class="feature-grid">
-                <div class="feature-card">
-                    <h3>Качество</h3>
+                <div class="feature-card fade-in-left">
+                    <h3>КАЧЕСТВО</h3>
                     <p>Мы предоставляем только качественные услуги</p>
                     <p class="secondary">Доказано временем</p>
                 </div>
-                <div class="feature-card">
-                    <h3>Скорость</h3>
+                <div class="feature-card fade-in-left" style="animation-delay: 0.2s;">
+                    <h3>СКОРОСТЬ</h3>
                     <p>Быстрое выполнение всех задач</p>
                     <p class="secondary">Экономим ваше время</p>
                 </div>
-                <div class="feature-card">
-                    <h3>Надежность</h3>
+                <div class="feature-card fade-in-left" style="animation-delay: 0.4s;">
+                    <h3>НАДЕЖНОСТЬ</h3>
                     <p>Работаем без сбоев и перерывов</p>
                     <p class="secondary">24/7 доступность</p>
                 </div>
             </div>
         </section>
 
-        <section class="location">
-            <h2>Мы находимся здесь</h2>
+        <section class="location fade-in-left">
+            <h2>МЫ НАХОДИМСЯ ЗДЕСЬ</h2>
             <a href="https://yandex.ru/maps/-/CLByFGOk" class="location-link" target="_blank">
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640">
                     <path d="M128 252.6C128 148.4 214 64 320 64C426 64 512 148.4 512 252.6C512 371.9 391.8 514.9 341.6 569.4C329.8 582.2 310.1 582.2 298.3 569.4C248.1 514.9 127.9 371.9 127.9 252.6zM320 320C355.3 320 384 291.3 384 256C384 220.7 355.3 192 320 192C284.7 192 256 220.7 256 256C256 291.3 284.7 320 320 320z"/>
                 </svg>
-                Посмотреть на карте
+                ПОСМОТРЕТЬ НА КАРТЕ
             </a>
         </section>
     </main>
 
-    <footer>
-        <p class="secondary">© 2024 Все права защищены</p>
+    <footer class="fade-in">
+        <p class="secondary">© 2025 Все права защищены</p>
     </footer>
+
+    <script src="js/animations.js"></script>
 </body>
 </html>
