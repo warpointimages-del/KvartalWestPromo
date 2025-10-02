@@ -186,6 +186,9 @@ footer {
     gap: 0;
     margin-bottom: 3rem;
     justify-content: center;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    padding-bottom: 10px;
 }
 
 .category-btn {
@@ -199,6 +202,8 @@ footer {
     margin: 0 -1px;
     position: relative;
     transition: all 0.3s ease;
+    white-space: nowrap;
+    flex-shrink: 0;
 }
 
 .category-btn.active {
@@ -218,6 +223,8 @@ footer {
     grid-template-columns: 300px 1fr;
     gap: 0;
     align-items: start;
+    opacity: 1;
+    transform: translateX(0);
 }
 
 .zone-item.active {
@@ -228,11 +235,6 @@ footer {
     opacity: 0;
     transform: translateX(100px);
     animation: zoneSlideIn 0.8s ease forwards;
-}
-
-.zone-item:not(.animate-in) {
-    opacity: 1;
-    transform: translateX(0);
 }
 
 .zone-image {
@@ -339,14 +341,13 @@ footer {
     
     /* Адаптивность для зон */
     .categories {
-        flex-direction: column;
-        align-items: center;
-        gap: 1rem;
+        justify-content: flex-start;
+        padding-bottom: 15px;
     }
     
     .category-btn {
-        width: 200px;
-        margin: 0;
+        padding: 0.7rem 1.2rem;
+        font-size: 0.9rem;
     }
     
     .zone-item {
