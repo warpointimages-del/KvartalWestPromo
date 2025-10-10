@@ -1,4 +1,8 @@
-// Главный класс для управления формой розыгрыша
+// Конфигурация Google Sheets
+const SPREADSHEET_ID = '1DXsuuP97PEVi2bk2JwTogWMRjzm_Y2LbhwmD8JgDs2Y';
+const API_KEY = 'YOUR_GOOGLE_API_KEY'; // Нужно получить в Google Cloud Console
+const RANGE = 'Sheet1!A:E';
+
 class RaffleForm {
     constructor() {
         this.form = document.getElementById('registrationForm');
@@ -56,9 +60,8 @@ class RaffleForm {
         const participant = {
             fullName: formData.get('fullName').trim(),
             birthDate: formData.get('birthDate'),
-            phone: formData.get('phone').replace(/\D/g, ''), // Сохраняем только цифры
-            timestamp: new Date().toISOString(),
-            id: Date.now() // Уникальный ID
+            phone: formData.get('phone').replace(/\D/g, ''),
+            timestamp: new Date().toISOString()
         };
         
         // Валидация данных
@@ -70,7 +73,7 @@ class RaffleForm {
         
         try {
             // Проверяем существующих участников
-            const existingParticipants = await this.loadParticipants();
+            const existingParticipants = await this.getParticipantsFromSheet();
             
             // Проверка на дубликат по номеру телефона
             const isDuplicate = existingParticipants.some(
@@ -85,13 +88,13 @@ class RaffleForm {
             // Добавляем номер участника
             participant.participantNumber = existingParticipants.length + 1;
             
-            // Сохраняем данные
-            const success = await this.saveParticipant(participant);
+            // Сохраняем в Google Sheets
+            const success = await this.saveToGoogleSheets(participant);
             
             if (success) {
                 this.showMessage(`🎉 Вы успешно зарегистрированы под номером ${participant.participantNumber}!`, 'success');
                 this.form.reset();
-                await this.loadParticipantsTable(); // Обновляем таблицу
+                await this.loadParticipantsTable();
             } else {
                 this.showMessage('⚠️ Ошибка при сохранении данных. Попробуйте еще раз.', 'error');
             }
@@ -153,46 +156,86 @@ class RaffleForm {
         this.messageDiv.className = `message ${type}`;
         this.messageDiv.style.display = 'block';
         
-        // Автоматическое скрытие через 5 секунд
         setTimeout(() => {
             this.messageDiv.style.display = 'none';
         }, 5000);
     }
     
-    // Загрузка участников из localStorage
-    async loadParticipants() {
+    // Получить данные из Google Sheets
+    async getParticipantsFromSheet() {
         try {
-            const stored = localStorage.getItem('raffleParticipants');
-            return stored ? JSON.parse(stored) : [];
+            const response = await fetch(
+                `https://sheets.googleapis.com/v4/spreadsheets/${SPREADSHEET_ID}/values/${RANGE}?key=${API_KEY}`
+            );
+            
+            if (!response.ok) {
+                throw new Error('Ошибка загрузки данных');
+            }
+            
+            const data = await response.json();
+            const rows = data.values || [];
+            
+            // Пропускаем заголовок и преобразуем в массив объектов
+            return rows.slice(1).map((row, index) => ({
+                participantNumber: parseInt(row[0]) || index + 1,
+                fullName: row[1] || '',
+                birthDate: row[2] || '',
+                phone: row[3] || '',
+                timestamp: row[4] || ''
+            }));
+            
         } catch (error) {
-            console.error('Error loading participants:', error);
+            console.error('Error loading from sheet:', error);
             return [];
         }
     }
     
-    // Сохранение участника
-    async saveParticipant(participant) {
+    // Сохранить в Google Sheets
+    async saveToGoogleSheets(participant) {
         try {
-            const existing = await this.loadParticipants();
+            // Для записи в Google Sheets через API нужна более сложная настройка
+            // Временно сохраняем в localStorage и обновляем таблицу вручную
+            await this.saveToLocalStorage(participant);
+            return true;
+            
+        } catch (error) {
+            console.error('Error saving to sheet:', error);
+            return false;
+        }
+    }
+    
+    // Временное решение: сохраняем в localStorage
+    async saveToLocalStorage(participant) {
+        try {
+            const existing = await this.getLocalParticipants();
             const updated = [...existing, participant];
-            
-            // Сохраняем в localStorage
             localStorage.setItem('raffleParticipants', JSON.stringify(updated));
-            
-            // В реальном приложении здесь будет отправка через GitHub Actions
-            console.log('Participant saved:', participant);
-            
             return true;
         } catch (error) {
-            console.error('Error saving participant:', error);
+            console.error('Error saving to localStorage:', error);
             return false;
+        }
+    }
+    
+    // Получить данные из localStorage
+    async getLocalParticipants() {
+        try {
+            const stored = localStorage.getItem('raffleParticipants');
+            return stored ? JSON.parse(stored) : [];
+        } catch (error) {
+            return [];
         }
     }
     
     // Загрузка таблицы участников
     async loadParticipantsTable() {
         try {
-            const participants = await this.loadParticipants();
+            let participants = await this.getParticipantsFromSheet();
+            
+            // Если не удалось загрузить из Sheets, используем localStorage
+            if (participants.length === 0) {
+                participants = await this.getLocalParticipants();
+            }
             
             if (participants.length === 0) {
                 this.participantsBody.innerHTML = `
@@ -265,5 +308,5 @@ class RaffleForm {
     }
 }
 
-// Создаем глобальный экземпляр для доступа из других скриптов
+// Создаем глобальный экземпляр
 const raffleForm = new RaffleForm();
