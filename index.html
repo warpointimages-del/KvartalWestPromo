@@ -111,7 +111,9 @@
 
         // Загрузка таблицы участников при загрузке страницы
         document.addEventListener('DOMContentLoaded', function() {
-            loadParticipantsTable();
+            if (typeof raffleForm !== 'undefined') {
+                raffleForm.loadParticipantsTable();
+            }
         });
     </script>
 </body>
