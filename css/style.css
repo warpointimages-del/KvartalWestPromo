@@ -101,18 +101,22 @@ p {
     transform: skew(-12deg) translateX(80px);
 }
 
-/* Сетка преимуществ */
-.feature-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 3rem;
-    margin: 3rem 0;
+/* Логотип */
+.logo-header {
+    width: 500px;
+    height: auto;
+    margin-bottom: 3rem;
 }
 
-.feature-card {
-    background-color: #2a2a2a;
-    padding: 2.5rem;
-    /* Убрали border */
+.header-text {
+    width: 100%;
+}
+
+.logo-small {
+    width: 120px;
+    height: auto;
+    margin-bottom: 1rem;
+    opacity: 0.7;
 }
 
 /* Ссылка с иконкой локации */
@@ -177,106 +181,127 @@ footer {
     }
 }
 
-/* Стили для зон VR */
-.zones {
-    margin: 6rem 0;
+/* Стили для формы регистрации */
+.registration-form {
+    max-width: 500px;
+    margin: 0 auto;
+    background-color: #2a2a2a;
+    padding: 2.5rem;
+    border-radius: 10px;
 }
 
-.categories {
-    display: flex;
-    gap: 0;
-    margin-bottom: 3rem;
-    justify-content: center;
-    flex-wrap: nowrap;
-    overflow-x: auto;
-    padding-bottom: 10px;
+.form-group {
+    margin-bottom: 1.5rem;
 }
 
-.category-btn {
-    font-family: 'Gilroy', sans-serif;
-    font-size: 1rem;
+.form-group label {
+    display: block;
+    margin-bottom: 0.5rem;
     color: #ffffff;
-    background-color: #262626;
+    font-weight: 500;
+}
+
+.form-group input {
+    width: 100%;
+    padding: 12px;
+    background-color: #1b1b1b;
     border: 2px solid #3a3a3a;
-    padding: 0.8rem 1.5rem;
-    cursor: pointer;
-    margin: 0 -1px;
-    position: relative;
-    transition: all 0.3s ease;
-    white-space: nowrap;
-    flex-shrink: 0;
+    border-radius: 8px;
+    color: #ffffff;
+    font-size: 1rem;
+    transition: border-color 0.3s ease;
 }
 
-.category-btn.active {
-    background-color: #3970f6;
+.form-group input:focus {
+    outline: none;
     border-color: #3970f6;
-    z-index: 2;
 }
 
-/* Контент зон */
-.zone-content {
-    position: relative;
-    min-height: 200px;
+.form-group input:invalid {
+    border-color: #e23239;
 }
 
-.zone-item {
+.submit-btn {
+    width: 100%;
+    background: linear-gradient(135deg, #3970f6, #e23239);
+    color: white;
+    border: none;
+    padding: 15px 30px;
+    font-size: 1.1rem;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: transform 0.2s ease;
+    font-family: 'Bebas Neue Pro', sans-serif;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.submit-btn:hover:not(:disabled) {
+    transform: translateY(-2px);
+}
+
+.submit-btn:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    transform: none;
+}
+
+/* Стили для таблицы участников */
+.table-container {
+    background-color: #2a2a2a;
+    border-radius: 10px;
+    padding: 1.5rem;
+    overflow-x: auto;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: #1b1b1b;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+th, td {
+    padding: 12px 15px;
+    text-align: left;
+    border-bottom: 1px solid #3a3a3a;
+}
+
+th {
+    background: linear-gradient(135deg, #3970f6, #e23239);
+    color: white;
+    font-weight: 600;
+    font-family: 'Bebas Neue Pro', sans-serif;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+tr:hover {
+    background-color: #2a2a2a;
+}
+
+/* Стили для сообщений */
+.message {
+    padding: 15px;
+    margin: 20px 0;
+    border-radius: 8px;
+    text-align: center;
     display: none;
-    grid-template-columns: 300px 1fr;
-    gap: 0;
-    align-items: start;
-    opacity: 1;
-    transform: translateX(0);
 }
 
-.zone-item.active {
-    display: grid;
-}
-
-.zone-item.animate-in {
-    opacity: 0;
-    transform: translateX(100px);
-    animation: zoneSlideIn 0.8s ease forwards;
-}
-
-.zone-image {
-    width: 300px;
-    height: 200px;
-    object-fit: cover;
+.message.success {
+    background: #d4edda;
+    color: #155724;
+    border: 1px solid #c3e6cb;
     display: block;
 }
 
-.zone-info {
-    background-color: #262626;
-    padding: 2rem;
-    height: 200px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    /* Убрали border */
-}
-
-.zone-info h3 {
-    font-size: 3rem;
-    margin-bottom: 1rem;
-    color: #ffffff;
-}
-
-.zone-info p {
-    font-size: 1rem;
-    line-height: 1.5;
-    color: #ffffff;
-    margin: 0;
-}
-
-@keyframes zoneSlideIn {
-    0% {
-        opacity: 0;
-        transform: translateX(100px);
-    }
-    100% {
-        opacity: 1;
-        transform: translateX(0);
-    }
+.message.error {
+    background: #f8d7da;
+    color: #721c24;
+    border: 1px solid #f5c6cb;
+    display: block;
 }
 
 /* Отключение анимаций для пользователей, которые их предпочитают не использовать */
@@ -291,12 +316,6 @@ footer {
         animation: none;
         opacity: 1;
         transform: skew(-12deg) translateX(0);
-    }
-    
-    .zone-item.animate-in {
-        animation: none;
-        opacity: 1;
-        transform: none;
     }
 }
 
@@ -319,15 +338,6 @@ footer {
         font-size: 2.5rem;
     }
     
-    .feature-grid {
-        grid-template-columns: 1fr;
-        gap: 2rem;
-    }
-    
-    .feature-card {
-        padding: 2rem;
-    }
-    
     .highlight {
         padding: 0.2rem 0.8rem;
     }
@@ -340,70 +350,7 @@ footer {
         transform: skew(-12deg) translateX(50px);
     }
     
-    /* Адаптивность для зон */
-    .categories {
-        justify-content: flex-start;
-        padding-bottom: 15px;
-    }
-    
-    .category-btn {
-        padding: 0.7rem 1.2rem;
-        font-size: 0.9rem;
-    }
-    
-    .zone-item {
-        grid-template-columns: 1fr;
-    }
-    
-    .zone-image {
-        width: 100%;
-        height: 150px;
-    }
-    
-    .zone-info {
-        height: auto;
-        padding: 1.5rem;
-    }
-    
-    .zone-info h3 {
-        font-size: 2.2rem;
-    }
-    
-    .zone-item.animate-in {
-        animation: zoneSlideInMobile 0.8s ease forwards;
-    }
-}
-
-@keyframes zoneSlideInMobile {
-    0% {
-        opacity: 0;
-        transform: translateX(50px);
-    }
-    100% {
-        opacity: 1;
-        transform: translateX(0);
-    }
-}
-/* Логотип */
-.logo-header {
-    width: 500px;
-    height: auto;
-    margin-bottom: 3rem;
-}
-
-.header-text {
-    width: 100%;
-}
-
-.logo-small {
-    width: 120px;
-    height: auto;
-    margin-bottom: 1rem;
-    opacity: 0.7;
-}
-
-/* Адаптивность для логотипа */
-@media (max-width: 768px) {
+    /* Адаптивность для логотипа */
     .logo-header {
         width: 300px;
         margin-bottom: 2rem;
@@ -411,5 +358,35 @@ footer {
     
     .logo-small {
         width: 80px;
+    }
+    
+    /* Адаптивность для призов */
+    .prizes-grid {
+        grid-template-columns: 1fr !important;
+        gap: 1rem !important;
+    }
+    
+    .prize-card img {
+        width: 150px !important;
+        height: 120px !important;
+    }
+    
+    /* Адаптивность для формы */
+    .registration-form {
+        padding: 1.5rem;
+    }
+    
+    /* Адаптивность для таблицы */
+    .table-container {
+        padding: 1rem;
+    }
+    
+    th, td {
+        padding: 8px 10px;
+        font-size: 0.9rem;
+    }
+    
+    table {
+        font-size: 0.9rem;
     }
 }
