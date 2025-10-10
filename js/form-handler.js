@@ -1,8 +1,4 @@
-// Конфигурация
-const GITHUB_USERNAME = 'YOUR_USERNAME'; // Замените на ваш GitHub username
-const REPO_NAME = 'YOUR_REPO_NAME'; // Замените на название репозитория
-const DATA_FILE = 'data/participants.json';
-
+// Главный класс для управления формой розыгрыша
 class RaffleForm {
     constructor() {
         this.form = document.getElementById('registrationForm');
@@ -19,13 +15,15 @@ class RaffleForm {
         // Маска для телефона
         const phoneInput = document.getElementById('phone');
         phoneInput.addEventListener('input', (e) => this.formatPhone(e.target));
+        
+        // Загружаем таблицу при инициализации
+        this.loadParticipantsTable();
     }
     
+    // Форматирование номера телефона
     formatPhone(input) {
-        // Оставляем только цифры
         let numbers = input.value.replace(/\D/g, '');
         
-        // Форматируем номер
         if (numbers.startsWith('7') || numbers.startsWith('8')) {
             numbers = '7' + numbers.substring(1);
         } else if (numbers.startsWith('9')) {
@@ -50,6 +48,7 @@ class RaffleForm {
         }
     }
     
+    // Обработка отправки формы
     async handleSubmit(e) {
         e.preventDefault();
         
@@ -62,7 +61,7 @@ class RaffleForm {
             id: Date.now() // Уникальный ID
         };
         
-        // Валидация
+        // Валидация данных
         if (!this.validateData(participant)) {
             return;
         }
@@ -79,7 +78,7 @@ class RaffleForm {
             );
             
             if (isDuplicate) {
-                this.showMessage('Вы уже участвуете в розыгрыше!', 'error');
+                this.showMessage('❌ Вы уже участвуете в розыгрыше!', 'error');
                 return;
             }
             
@@ -94,44 +93,53 @@ class RaffleForm {
                 this.form.reset();
                 await this.loadParticipantsTable(); // Обновляем таблицу
             } else {
-                this.showMessage('Ошибка при сохранении данных. Попробуйте еще раз.', 'error');
+                this.showMessage('⚠️ Ошибка при сохранении данных. Попробуйте еще раз.', 'error');
             }
             
         } catch (error) {
             console.error('Error:', error);
-            this.showMessage('Ошибка сети. Попробуйте еще раз.', 'error');
+            this.showMessage('🚫 Ошибка сети. Попробуйте еще раз.', 'error');
         } finally {
             this.setLoading(false);
         }
     }
     
+    // Валидация данных
     validateData(participant) {
         if (participant.fullName.length < 2) {
-            this.showMessage('Введите корректное ФИО', 'error');
+            this.showMessage('✏️ Введите корректное ФИО', 'error');
             return false;
         }
         
         if (!participant.birthDate) {
-            this.showMessage('Введите дату рождения', 'error');
+            this.showMessage('📅 Введите дату рождения', 'error');
             return false;
         }
         
-        // Проверка возраста (например, старше 13 лет)
+        // Проверка возраста (старше 13 лет)
         const birthDate = new Date(participant.birthDate);
-        const age = new Date().getFullYear() - birthDate.getFullYear();
+        const today = new Date();
+        const age = today.getFullYear() - birthDate.getFullYear();
+        const monthDiff = today.getMonth() - birthDate.getMonth();
+        
+        if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < birthDate.getDate())) {
+            age--;
+        }
+        
         if (age < 13) {
-            this.showMessage('Для участия в розыгрыше необходимо быть старше 13 лет', 'error');
+            this.showMessage('🔞 Для участия в розыгрыше необходимо быть старше 13 лет', 'error');
             return false;
         }
         
         if (participant.phone.length !== 11) {
-            this.showMessage('Введите корректный номер телефона', 'error');
+            this.showMessage('📱 Введите корректный номер телефона', 'error');
             return false;
         }
         
         return true;
     }
     
+    // Установка состояния загрузки
     setLoading(loading) {
         this.submitBtn.disabled = loading;
         this.submitBtn.textContent = loading ? 
@@ -139,20 +147,21 @@ class RaffleForm {
             '🎯 УЧАСТВОВАТЬ В РОЗЫГРЫШЕ';
     }
     
+    // Показать сообщение
     showMessage(text, type) {
         this.messageDiv.textContent = text;
         this.messageDiv.className = `message ${type}`;
         this.messageDiv.style.display = 'block';
         
+        // Автоматическое скрытие через 5 секунд
         setTimeout(() => {
             this.messageDiv.style.display = 'none';
         }, 5000);
     }
     
+    // Загрузка участников из localStorage
     async loadParticipants() {
         try {
-            // В реальном приложении здесь будет запрос к GitHub API
-            // Для демо используем localStorage
             const stored = localStorage.getItem('raffleParticipants');
             return stored ? JSON.parse(stored) : [];
         } catch (error) {
@@ -161,12 +170,13 @@ class RaffleForm {
         }
     }
     
+    // Сохранение участника
     async saveParticipant(participant) {
         try {
             const existing = await this.loadParticipants();
             const updated = [...existing, participant];
             
-            // Сохраняем в localStorage для демо
+            // Сохраняем в localStorage
             localStorage.setItem('raffleParticipants', JSON.stringify(updated));
             
             // В реальном приложении здесь будет отправка через GitHub Actions
@@ -179,6 +189,7 @@ class RaffleForm {
         }
     }
     
+    // Загрузка таблицы участников
     async loadParticipantsTable() {
         try {
             const participants = await this.loadParticipants();
@@ -201,7 +212,7 @@ class RaffleForm {
             
             this.participantsBody.innerHTML = sorted.map(participant => `
                 <tr>
-                    <td>${participant.participantNumber}</td>
+                    <td><strong>${participant.participantNumber}</strong></td>
                     <td>${this.escapeHtml(participant.fullName)}</td>
                     <td>${this.formatDate(participant.birthDate)}</td>
                     <td>${this.formatPhoneDisplay(participant.phone)}</td>
@@ -221,20 +232,30 @@ class RaffleForm {
         }
     }
     
+    // Экранирование HTML
     escapeHtml(text) {
         const div = document.createElement('div');
         div.textContent = text;
         return div.innerHTML;
     }
     
+    // Форматирование даты
     formatDate(dateString) {
         return new Date(dateString).toLocaleDateString('ru-RU');
     }
     
+    // Форматирование даты и времени
     formatDateTime(dateString) {
-        return new Date(dateString).toLocaleString('ru-RU');
+        return new Date(dateString).toLocaleString('ru-RU', {
+            day: '2-digit',
+            month: '2-digit',
+            year: 'numeric',
+            hour: '2-digit',
+            minute: '2-digit'
+        });
     }
     
+    // Форматирование телефона для отображения
     formatPhoneDisplay(phone) {
         const numbers = phone.replace(/\D/g, '');
         if (numbers.length === 11) {
@@ -244,7 +265,5 @@ class RaffleForm {
     }
 }
 
-// Инициализация при загрузке страницы
-document.addEventListener('DOMContentLoaded', function() {
-    new RaffleForm();
-});
+// Создаем глобальный экземпляр для доступа из других скриптов
+const raffleForm = new RaffleForm();
