@@ -25,12 +25,12 @@
             <div class="prize-card">
                 <img src="pics/vr.webp" alt="VR шлем" class="prize-image">
                 <h3 class="prize-place" style="color: #c0c0c0;">2 МЕСТО</h3>
-                <p class="prize-name">VR шлем</p>
+                <p class="prize-name">Oculus Quest 3S</p>
             </div>
             <div class="prize-card">
                 <img src="pics/speaker.webp" alt="Колонка" class="prize-image">
                 <h3 class="prize-place" style="color: #cd7f32;">3 МЕСТО</h3>
-                <p class="prize-name">Премиум колонка</p>
+                <p class="prize-name">Яндекс Станция Миди</p>
             </div>
         </div>
     </header>
@@ -38,33 +38,24 @@
     <!-- Форма регистрации -->
     <section class="registration scroll-animate">
         <h2>ЗАПИСЬ НА <span class="highlight">УЧАСТИЕ</span></h2>
-        <p class="form-description">Заполни форму ниже чтобы участвовать в розыгрыше</p>
         
-        <!-- Кастомная стилизованная форма -->
-        <form id="raffleForm" class="custom-form">
-            <div class="form-group">
-                <label for="fullName">ФИО:</label>
-                <input type="text" id="fullName" name="fullName" required 
-                       placeholder="Иванов Иван Иванович">
-            </div>
-            
-            <div class="form-group">
-                <label for="birthDate">Дата рождения:</label>
-                <input type="date" id="birthDate" name="birthDate" required>
-            </div>
-            
-            <div class="form-group">
-                <label for="phone">Номер телефона:</label>
-                <input type="tel" id="phone" name="phone" required 
-                       placeholder="+7 (999) 999-99-99">
-            </div>
+        <!-- Google Forms -->
+        <iframe id="googleForm" 
+                src="https://docs.google.com/forms/d/e/YOUR_FORM_ID/viewform?embedded=true" 
+                width="100%" 
+                height="800" 
+                frameborder="0" 
+                marginheight="0" 
+                marginwidth="0">
+            Загрузка…
+        </iframe>
 
-            <button type="submit" class="submit-btn">
-                УЧАСТВОВАТЬ В РОЗЫГРЫШЕ
-            </button>
-        </form>
-        
-        <div id="message" class="message"></div>
+        <!-- Кнопка участвовать -->
+        <div class="form-button-container">
+            <a href="https://docs.google.com/forms/d/e/1FAIpQLSfT5rz1pJCS1tlPkT26-gtJ_BIK92m65oivdSuWZHBNtW4jKA/viewform" target="_blank" class="participate-btn">
+                <span class="btn-text">УЧАСТВОВАТЬ В РОЗЫГРЫШЕ</span>
+            </a>
+        </div>
     </section>
 
     <footer class="scroll-animate">
@@ -72,7 +63,6 @@
         <p class="secondary">© 2025 Все права защищены</p>
     </footer>
 
-    <script src="js/form-handler.js"></script>
     <script>
         // Анимация при скролле
         const observer = new IntersectionObserver((entries) => {
