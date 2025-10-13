@@ -1,411 +1,107 @@
-/* Подключение шрифтов */
-@font-face {
-    font-family: 'Bebas Neue Pro';
-    src: url('../fonts/Bebas Neue Pro Bold Italic.woff2') format('woff2');
-    font-weight: bold;
-    font-style: normal;
-    font-display: swap;
-}
-
-@font-face {
-    font-family: 'Gilroy';
-    src: url('../fonts/Gilroy-Medium.ttf') format('truetype');
-    font-weight: 500;
-    font-style: normal;
-    font-display: swap;
-}
-
-/* Базовые стили */
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
-
-body {
-    font-family: 'Gilroy', sans-serif;
-    background-color: #1b1b1b;
-    color: #ffffff;
-    line-height: 1.6;
-    padding: 40px 20px;
-    max-width: 1200px;
+/* Стили для кастомной формы */
+.custom-form-container {
+    max-width: 600px;
     margin: 0 auto;
+    background-color: #2a2a2a;
+    padding: 2.5rem;
 }
 
-/* Заголовки с Bebas Neue */
-h1, h2, h3 {
-    font-family: 'Bebas Neue Pro', sans-serif;
-    color: #ffffff;
-    font-weight: bold;
-    font-style: normal;
-    text-transform: uppercase;
-    margin-bottom: 2rem;
-    line-height: 1.1;
-    letter-spacing: 1px;
-}
-
-h1 {
-    font-size: 5rem;
-    margin-bottom: 1rem;
-}
-
-h2 {
-    font-size: 3.5rem;
-    margin: 4rem 0 2rem 0;
-}
-
-h3 {
-    font-size: 3.5rem;
-    margin-bottom: 1rem;
-}
-
-/* Основной текст */
-p {
-    margin-bottom: 1.5rem;
-    font-size: 1.1rem;
-}
-
-/* Серый текст для дополнительной информации */
-.secondary {
-    color: #9c9c9c;
-    font-size: 1rem;
-}
-
-/* Подзаголовок */
-.subtitle {
-    font-size: 1.3rem;
-    color: #ffffff;
-    margin-bottom: 3rem;
-}
-
-/* Правильная фигура параллелограмма */
-.highlight {
-    position: relative;
-    display: inline-block;
-    padding: 0.3rem 1rem;
-    z-index: 1;
-}
-
-.highlight::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background-color: #e23239;
-    transform: skew(-12deg);
-    z-index: -1;
-    opacity: 0;
-    transform: skew(-12deg) translateX(80px);
-}
-
-/* Логотип */
-.logo-header {
-    width: 500px;
-    height: auto;
-    margin-bottom: 3rem;
-}
-
-.header-text {
+.warpoint-form {
     width: 100%;
 }
 
-.logo-small {
-    width: 120px;
-    height: auto;
-    margin-bottom: 1rem;
-    opacity: 0.7;
-}
-
-/* Сетка призов */
-.prizes-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 2rem;
-    margin-top: 4rem;
-}
-
-.prize-card {
+.form-header {
     text-align: center;
-    background-color: #2a2a2a;
-    padding: 2rem;
+    margin-bottom: 2rem;
 }
 
-.prize-image {
-    width: 200px;
-    height: 150px;
-    object-fit: contain;
-    margin-bottom: 1rem;
-}
-
-.prize-place {
-    font-size: 2.5rem;
-    margin-bottom: 0.5rem;
-}
-
-.prize-name {
-    font-size: 1.2rem;
+.form-title {
+    font-family: 'Bebas Neue Pro', sans-serif;
+    font-size: 3rem;
     color: #ffffff;
+    text-transform: uppercase;
+    letter-spacing: 1px;
     margin: 0;
 }
 
-/* Футер */
-footer {
-    margin-top: 6rem;
-    padding-top: 3rem;
-    text-align: center;
+.form-field {
+    margin-bottom: 1.5rem;
 }
 
-/* Анимации появления при скролле */
-.scroll-animate {
-    opacity: 0;
-    transform: translateX(100px);
-    transition: all 0.8s ease;
+.field-label {
+    display: block;
+    font-family: 'Gilroy', sans-serif;
+    font-size: 1.1rem;
+    color: #ffffff;
+    margin-bottom: 0.5rem;
+    font-weight: 500;
 }
 
-.scroll-animate.visible {
-    opacity: 1;
-    transform: translateX(0);
+.warpoint-input {
+    width: 100%;
+    padding: 12px;
+    background-color: #1b1b1b;
+    border: 2px solid #3a3a3a;
+    color: #ffffff;
+    font-family: 'Gilroy', sans-serif;
+    font-size: 1rem;
+    transition: border-color 0.3s ease;
 }
 
-/* ФИКС: Анимация фигур - СЛАЙД ИЗ СПРАВА С МЕНЬШЕЙ ЗАДЕРЖКОЙ */
-.scroll-animate.visible .highlight::before {
-    animation: shapeSlideIn 0.8s ease 0.3s forwards;
+.warpoint-input:focus {
+    outline: none;
+    border-color: #e23239;
 }
 
-@keyframes shapeSlideIn {
-    0% {
-        opacity: 0;
-        transform: skew(-12deg) translateX(80px);
-    }
-    100% {
-        opacity: 1;
-        transform: skew(-12deg) translateX(0);
-    }
+.warpoint-input:invalid {
+    border-color: #e23239;
 }
 
-/* СТИЛИЗАЦИЯ GOOGLE FORMS */
-#iframe {
-    background-color: #2a2a2a !important;
+/* Кнопка отправки в виде параллелограмма */
+.warpoint-submit-btn {
+    width: 100%;
+    background-color: #e23239;
+    transform: skew(-12deg);
+    border: none;
+    padding: 1.5rem 2rem;
+    margin-top: 1rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
 }
 
-/* Основной контейнер формы */
-.freebirdFormviewerViewFormContent {
-    background-color: #2a2a2a !important;
+.warpoint-submit-btn:hover {
+    background-color: #c4292f;
+    transform: skew(-12deg) translateY(-2px);
 }
 
-.freebirdFormviewerViewCenteredContent {
-    background-color: #2a2a2a !important;
-    margin: 0 !important;
-    padding: 0 !important;
+.btn-text {
+    display: block;
+    font-family: 'Bebas Neue Pro', sans-serif;
+    font-size: 2rem;
+    color: #ffffff;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    transform: skew(12deg);
+    margin: 0;
 }
 
-/* Карточка формы */
-.freebirdFormviewerViewFormCard {
-    background-color: #2a2a2a !important;
-    border: none !important;
-    box-shadow: none !important;
-    margin: 0 !important;
-    padding: 0 !important;
-}
-
-/* Заголовок формы */
-.freebirdFormviewerViewHeaderHeader {
-    color: #ffffff !important;
-    font-family: 'Bebas Neue Pro', sans-serif !important;
-    font-size: 3.5rem !important;
-    text-align: center !important;
-    margin-bottom: 1rem !important;
-}
-
-/* Описание формы */
-.freebirdFormviewerViewHeaderDescription {
-    color: #9c9c9c !important;
-    font-family: 'Gilroy', sans-serif !important;
-    font-size: 1.3rem !important;
-    text-align: center !important;
-    margin-bottom: 3rem !important;
-}
-
-/* Контейнер вопросов */
-.freebirdFormviewerViewItemsItemItem {
-    background-color: #2a2a2a !important;
-    border: none !important;
-    margin-bottom: 2rem !important;
-}
-
-/* Текст вопроса */
-.freebirdFormviewerViewItemsItemItemTitle {
-    color: #ffffff !important;
-    font-family: 'Gilroy', sans-serif !important;
-    font-size: 1.1rem !important;
-    font-weight: 500 !important;
-}
-
-/* Поля ввода */
-.quantumWizTextinputPaperinputInput {
-    color: #ffffff !important;
-    background-color: #1b1b1b !important;
-    border: 2px solid #3a3a3a !important;
-    font-family: 'Gilroy', sans-serif !important;
-    font-size: 1rem !important;
-    padding: 12px !important;
-}
-
-.quantumWizTextinputPaperinputInput:focus {
-    border-color: #e23239 !important;
-    outline: none !important;
-}
-
-/* Плейсхолдер */
-.quantumWizTextinputPaperinputPlaceholder {
-    color: #9c9c9c !important;
-}
-
-/* Поле даты */
-.quantumWizTextinputPaperinputInput[type="date"] {
-    color: #ffffff !important;
-}
-
-/* Контейнер кнопки отправки */
-.freebirdFormviewerViewNavigationLeftButtons {
-    background-color: transparent !important;
-    text-align: center !important;
-    margin-top: 2rem !important;
-}
-
-/* Кнопка отправки */
-.quantumWizButtonPaperbuttonEl {
-    background-color: #e23239 !important;
-    transform: skew(-12deg) !important;
-    border: none !important;
-    padding: 1.5rem 3rem !important;
-    margin: 0 auto !important;
-    display: block !important;
-    min-width: 300px !important;
-}
-
-.quantumWizButtonPaperbuttonLabel {
-    color: #ffffff !important;
-    font-family: 'Bebas Neue Pro', sans-serif !important;
-    font-size: 2rem !important;
-    text-transform: uppercase !important;
-    letter-spacing: 1px !important;
-    transform: skew(12deg) !important;
-    display: block !important;
-}
-
-.quantumWizButtonPaperbuttonEl:hover {
-    background-color: #c4292f !important;
-}
-
-/* Обязательные поля */
-.freebirdFormviewerViewItemsItemRequiredAsterisk {
-    color: #e23239 !important;
-}
-
-/* Сообщения об ошибках */
-.freebirdFormviewerViewItemsItemErrorMessage {
-    color: #e23239 !important;
-    font-family: 'Gilroy', sans-serif !important;
-}
-
-/* Прогресс бар */
-.freebirdFormviewerViewNavigationProgressIndicator {
-    background-color: #3a3a3a !important;
-}
-
-.freebirdFormviewerViewNavigationProgressIndicator .freebirdFormviewerViewNavigationProgressIndicatorIncomplete {
-    background-color: #3a3a3a !important;
-}
-
-.freebirdFormviewerViewNavigationProgressIndicator .freebirdFormviewerViewNavigationProgressIndicatorComplete {
-    background-color: #e23239 !important;
-}
-
-/* Отключение анимаций для пользователей, которые их предпочитают не использовать */
-@media (prefers-reduced-motion: reduce) {
-    .scroll-animate {
-        opacity: 1;
-        transform: none;
-        transition: none;
-    }
-    
-    .scroll-animate.visible .highlight::before {
-        animation: none;
-        opacity: 1;
-        transform: skew(-12deg) translateX(0);
-    }
-}
-
-/* Адаптивность */
+/* Адаптивность для формы */
 @media (max-width: 768px) {
-    body {
-        padding: 30px 15px;
+    .custom-form-container {
+        padding: 1.5rem;
     }
     
-    h1 {
-        font-size: 3.5rem;
+    .form-title {
+        font-size: 2.2rem;
     }
     
-    h2 {
-        font-size: 2.5rem;
-        margin: 3rem 0 1.5rem 0;
+    .warpoint-submit-btn {
+        padding: 1.2rem 1.5rem;
     }
     
-    h3 {
-        font-size: 2.5rem;
-    }
-    
-    .highlight {
-        padding: 0.2rem 0.8rem;
-    }
-    
-    .scroll-animate {
-        transform: translateX(50px);
-    }
-    
-    .highlight::before {
-        transform: skew(-12deg) translateX(50px);
-    }
-    
-    /* Адаптивность для логотипа */
-    .logo-header {
-        width: 300px;
-        margin-bottom: 2rem;
-    }
-    
-    .logo-small {
-        width: 80px;
-    }
-    
-    /* Адаптивность для призов */
-    .prizes-grid {
-        grid-template-columns: 1fr;
-        gap: 1rem;
-    }
-    
-    .prize-image {
-        width: 150px;
-        height: 120px;
-    }
-    
-    .prize-place {
-        font-size: 2rem;
-    }
-    
-    /* Адаптивность Google Forms */
-    .freebirdFormviewerViewHeaderHeader {
-        font-size: 2.5rem !important;
-    }
-    
-    .quantumWizButtonPaperbuttonEl {
-        min-width: 250px !important;
-        padding: 1.2rem 2rem !important;
-    }
-    
-    .quantumWizButtonPaperbuttonLabel {
-        font-size: 1.5rem !important;
+    .btn-text {
+        font-size: 1.5rem;
     }
 }
