@@ -1,14 +1,12 @@
-// Конфигурация Google Sheets
-const SPREADSHEET_ID = '1DXsuuP97PEVi2bk2JwTogWMRjzm_Y2LbhwmD8JgDs2Y';
-const API_KEY = 'YOUR_GOOGLE_API_KEY'; // Нужно получить в Google Cloud Console
-const RANGE = 'Sheet1!A:E';
-
+// Главный класс для управления формой
 class RaffleForm {
     constructor() {
-        this.form = document.getElementById('registrationForm');
+        this.form = document.getElementById('raffleForm');
         this.messageDiv = document.getElementById('message');
-        this.submitBtn = document.getElementById('submitBtn');
-        this.participantsBody = document.getElementById('participantsBody');
+        this.submitBtn = this.form.querySelector('.submit-btn');
+        
+        // URL вашей Google Forms (просто вставьте ссылку на форму)
+        this.googleFormUrl = 'https://docs.google.com/forms/d/e/1FAIpQLSfT5rz1pJCS1tlPkT26-gtJ_BIK92m65oivdSuWZHBNtW4jKA/viewform';
         
         this.init();
     }
@@ -19,9 +17,6 @@ class RaffleForm {
         // Маска для телефона
         const phoneInput = document.getElementById('phone');
         phoneInput.addEventListener('input', (e) => this.formatPhone(e.target));
-        
-        // Загружаем таблицу при инициализации
-        this.loadParticipantsTable();
     }
     
     // Форматирование номера телефона
@@ -60,8 +55,7 @@ class RaffleForm {
         const participant = {
             fullName: formData.get('fullName').trim(),
             birthDate: formData.get('birthDate'),
-            phone: formData.get('phone').replace(/\D/g, ''),
-            timestamp: new Date().toISOString()
+            phone: formData.get('phone').replace(/\D/g, '')
         };
         
         // Валидация данных
@@ -72,36 +66,16 @@ class RaffleForm {
         this.setLoading(true);
         
         try {
-            // Проверяем существующих участников
-            const existingParticipants = await this.getParticipantsFromSheet();
+            // Просто открываем чистую Google Forms
+            // Пользователь сам заполнит данные
+            window.open(this.googleFormUrl, '_blank');
             
-            // Проверка на дубликат по номеру телефона
-            const isDuplicate = existingParticipants.some(
-                p => p.phone === participant.phone
-            );
-            
-            if (isDuplicate) {
-                this.showMessage('❌ Вы уже участвуете в розыгрыше!', 'error');
-                return;
-            }
-            
-            // Добавляем номер участника
-            participant.participantNumber = existingParticipants.length + 1;
-            
-            // Сохраняем в Google Sheets
-            const success = await this.saveToGoogleSheets(participant);
-            
-            if (success) {
-                this.showMessage(`🎉 Вы успешно зарегистрированы под номером ${participant.participantNumber}!`, 'success');
-                this.form.reset();
-                await this.loadParticipantsTable();
-            } else {
-                this.showMessage('⚠️ Ошибка при сохранении данных. Попробуйте еще раз.', 'error');
-            }
+            this.showMessage('🎉 Форма открыта! Заполните данные и нажмите "Отправить".', 'success');
+            this.form.reset();
             
         } catch (error) {
             console.error('Error:', error);
-            this.showMessage('🚫 Ошибка сети. Попробуйте еще раз.', 'error');
+            this.showMessage('🚫 Ошибка. Попробуйте еще раз.', 'error');
         } finally {
             this.setLoading(false);
         }
@@ -146,7 +120,7 @@ class RaffleForm {
     setLoading(loading) {
         this.submitBtn.disabled = loading;
         this.submitBtn.textContent = loading ? 
-            '⏳ Регистрация...' : 
+            '⏳ Открываем форму...' : 
             '🎯 УЧАСТВОВАТЬ В РОЗЫГРЫШЕ';
     }
     
@@ -160,153 +134,9 @@ class RaffleForm {
             this.messageDiv.style.display = 'none';
         }, 5000);
     }
-    
-    // Получить данные из Google Sheets
-    async getParticipantsFromSheet() {
-        try {
-            const response = await fetch(
-                `https://sheets.googleapis.com/v4/spreadsheets/${SPREADSHEET_ID}/values/${RANGE}?key=${API_KEY}`
-            );
-            
-            if (!response.ok) {
-                throw new Error('Ошибка загрузки данных');
-            }
-            
-            const data = await response.json();
-            const rows = data.values || [];
-            
-            // Пропускаем заголовок и преобразуем в массив объектов
-            return rows.slice(1).map((row, index) => ({
-                participantNumber: parseInt(row[0]) || index + 1,
-                fullName: row[1] || '',
-                birthDate: row[2] || '',
-                phone: row[3] || '',
-                timestamp: row[4] || ''
-            }));
-            
-        } catch (error) {
-            console.error('Error loading from sheet:', error);
-            return [];
-        }
-    }
-    
-    // Сохранить в Google Sheets
-    async saveToGoogleSheets(participant) {
-        try {
-            // Для записи в Google Sheets через API нужна более сложная настройка
-            // Временно сохраняем в localStorage и обновляем таблицу вручную
-            await this.saveToLocalStorage(participant);
-            return true;
-            
-        } catch (error) {
-            console.error('Error saving to sheet:', error);
-            return false;
-        }
-    }
-    
-    // Временное решение: сохраняем в localStorage
-    async saveToLocalStorage(participant) {
-        try {
-            const existing = await this.getLocalParticipants();
-            const updated = [...existing, participant];
-            localStorage.setItem('raffleParticipants', JSON.stringify(updated));
-            return true;
-        } catch (error) {
-            console.error('Error saving to localStorage:', error);
-            return false;
-        }
-    }
-    
-    // Получить данные из localStorage
-    async getLocalParticipants() {
-        try {
-            const stored = localStorage.getItem('raffleParticipants');
-            return stored ? JSON.parse(stored) : [];
-        } catch (error) {
-            return [];
-        }
-    }
-    
-    // Загрузка таблицы участников
-    async loadParticipantsTable() {
-        try {
-            let participants = await this.getParticipantsFromSheet();
-            
-            // Если не удалось загрузить из Sheets, используем localStorage
-            if (participants.length === 0) {
-                participants = await this.getLocalParticipants();
-            }
-            
-            if (participants.length === 0) {
-                this.participantsBody.innerHTML = `
-                    <tr>
-                        <td colspan="5" style="text-align: center; padding: 2rem;">
-                            Пока нет участников. Будьте первым!
-                        </td>
-                    </tr>
-                `;
-                return;
-            }
-            
-            // Сортируем по дате регистрации (новые сверху)
-            const sorted = participants.sort((a, b) => 
-                new Date(b.timestamp) - new Date(a.timestamp)
-            );
-            
-            this.participantsBody.innerHTML = sorted.map(participant => `
-                <tr>
-                    <td><strong>${participant.participantNumber}</strong></td>
-                    <td>${this.escapeHtml(participant.fullName)}</td>
-                    <td>${this.formatDate(participant.birthDate)}</td>
-                    <td>${this.formatPhoneDisplay(participant.phone)}</td>
-                    <td>${this.formatDateTime(participant.timestamp)}</td>
-                </tr>
-            `).join('');
-            
-        } catch (error) {
-            console.error('Error loading table:', error);
-            this.participantsBody.innerHTML = `
-                <tr>
-                    <td colspan="5" style="text-align: center; color: #e23239;">
-                        Ошибка загрузки данных
-                    </td>
-                </tr>
-            `;
-        }
-    }
-    
-    // Экранирование HTML
-    escapeHtml(text) {
-        const div = document.createElement('div');
-        div.textContent = text;
-        return div.innerHTML;
-    }
-    
-    // Форматирование даты
-    formatDate(dateString) {
-        return new Date(dateString).toLocaleDateString('ru-RU');
-    }
-    
-    // Форматирование даты и времени
-    formatDateTime(dateString) {
-        return new Date(dateString).toLocaleString('ru-RU', {
-            day: '2-digit',
-            month: '2-digit',
-            year: 'numeric',
-            hour: '2-digit',
-            minute: '2-digit'
-        });
-    }
-    
-    // Форматирование телефона для отображения
-    formatPhoneDisplay(phone) {
-        const numbers = phone.replace(/\D/g, '');
-        if (numbers.length === 11) {
-            return `+7 (${numbers.substring(1, 4)}) ${numbers.substring(4, 7)}-${numbers.substring(7, 9)}-${numbers.substring(9, 11)}`;
-        }
-        return phone;
-    }
 }
 
-// Создаем глобальный экземпляр
-const raffleForm = new RaffleForm();
+// Инициализация формы
+document.addEventListener('DOMContentLoaded', function() {
+    new RaffleForm();
+});
