@@ -32,6 +32,26 @@ body {
     margin: 0 auto;
 }
 
+/* Стили для логотипов в шапке */
+.header-logos {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 2rem;
+    margin-bottom: 3rem;
+    flex-wrap: wrap;
+}
+
+.logo-kvartal {
+    width: 300px;
+    height: auto;
+}
+
+.logo-warpoint {
+    width: 250px;
+    height: auto;
+}
+
 /* Заголовки с Bebas Neue */
 h1, h2, h3 {
     font-family: 'Bebas Neue Pro', sans-serif;
@@ -100,13 +120,6 @@ p {
     transform: skew(-12deg) translateX(80px);
 }
 
-/* Логотип */
-.logo-header {
-    width: 500px;
-    height: auto;
-    margin-bottom: 3rem;
-}
-
 .header-text {
     width: 100%;
 }
@@ -148,12 +161,6 @@ p {
     font-size: 1.2rem;
     color: #ffffff;
     margin: 0;
-}
-
-/* Контейнер формы */
-.form-container {
-    background-color: #2a2a2a;
-    padding: 2rem;
 }
 
 /* Стили для кастомной формы */
@@ -237,26 +244,36 @@ p {
     margin: 0;
 }
 
-/* Сообщения */
+/* Сообщения в стиле WARPOINT */
 .message {
-    padding: 15px;
-    margin: 20px 0;
+    padding: 1rem;
+    margin: 2rem 0;
     text-align: center;
-    border: 2px solid;
     display: none;
 }
 
+.message.success .highlight,
+.message.error .highlight {
+    font-family: 'Bebas Neue Pro', sans-serif;
+    font-size: 1.8rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    padding: 0.5rem 1rem;
+}
+
+.message.success .highlight::before {
+    background-color: #3970f6;
+}
+
+.message.error .highlight::before {
+    background-color: #e23239;
+}
+
 .message.success {
-    background-color: #1b1b1b;
-    color: #ffffff;
-    border-color: #3970f6;
     display: block;
 }
 
 .message.error {
-    background-color: #1b1b1b;
-    color: #e23239;
-    border-color: #e23239;
     display: block;
 }
 
@@ -316,6 +333,20 @@ footer {
         padding: 30px 15px;
     }
     
+    /* Адаптивность для логотипов */
+    .header-logos {
+        gap: 1.5rem;
+        margin-bottom: 2rem;
+    }
+    
+    .logo-kvartal {
+        width: 200px;
+    }
+    
+    .logo-warpoint {
+        width: 180px;
+    }
+    
     h1 {
         font-size: 3.5rem;
     }
@@ -341,12 +372,6 @@ footer {
         transform: skew(-12deg) translateX(50px);
     }
     
-    /* Адаптивность для логотипа */
-    .logo-header {
-        width: 300px;
-        margin-bottom: 2rem;
-    }
-    
     .logo-small {
         width: 80px;
     }
@@ -367,10 +392,6 @@ footer {
     }
     
     /* Адаптивность для формы */
-    .form-container {
-        padding: 1.5rem;
-    }
-    
     .custom-form-container {
         padding: 1.5rem;
     }
@@ -381,5 +402,33 @@ footer {
     
     .btn-text {
         font-size: 1.5rem;
+    }
+    
+    .message.success .highlight,
+    .message.error .highlight {
+        font-size: 1.4rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .header-logos {
+        flex-direction: column;
+        gap: 1rem;
+    }
+    
+    .logo-kvartal {
+        width: 180px;
+    }
+    
+    .logo-warpoint {
+        width: 160px;
+    }
+    
+    h1 {
+        font-size: 3rem;
+    }
+    
+    h2 {
+        font-size: 2.2rem;
     }
 }
