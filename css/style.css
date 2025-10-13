@@ -1,3 +1,190 @@
+/* Подключение шрифтов */
+@font-face {
+    font-family: 'Bebas Neue Pro';
+    src: url('../fonts/Bebas Neue Pro Bold Italic.woff2') format('woff2');
+    font-weight: bold;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Gilroy';
+    src: url('../fonts/Gilroy-Medium.ttf') format('truetype');
+    font-weight: 500;
+    font-style: normal;
+    font-display: swap;
+}
+
+/* Базовые стили */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Gilroy', sans-serif;
+    background-color: #1b1b1b;
+    color: #ffffff;
+    line-height: 1.6;
+    padding: 40px 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+/* Заголовки с Bebas Neue */
+h1, h2, h3 {
+    font-family: 'Bebas Neue Pro', sans-serif;
+    color: #ffffff;
+    font-weight: bold;
+    font-style: normal;
+    text-transform: uppercase;
+    margin-bottom: 2rem;
+    line-height: 1.1;
+    letter-spacing: 1px;
+}
+
+h1 {
+    font-size: 5rem;
+    margin-bottom: 1rem;
+}
+
+h2 {
+    font-size: 3.5rem;
+    margin: 4rem 0 2rem 0;
+}
+
+h3 {
+    font-size: 3.5rem;
+    margin-bottom: 1rem;
+}
+
+/* Основной текст */
+p {
+    margin-bottom: 1.5rem;
+    font-size: 1.1rem;
+}
+
+/* Серый текст для дополнительной информации */
+.secondary {
+    color: #9c9c9c;
+    font-size: 1rem;
+}
+
+/* Подзаголовок */
+.subtitle {
+    font-size: 1.3rem;
+    color: #ffffff;
+    margin-bottom: 3rem;
+}
+
+/* Правильная фигура параллелограмма */
+.highlight {
+    position: relative;
+    display: inline-block;
+    padding: 0.3rem 1rem;
+    z-index: 1;
+}
+
+.highlight::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #e23239;
+    transform: skew(-12deg);
+    z-index: -1;
+    opacity: 0;
+    transform: skew(-12deg) translateX(80px);
+}
+
+/* Логотип */
+.logo-header {
+    width: 500px;
+    height: auto;
+    margin-bottom: 3rem;
+}
+
+.header-text {
+    width: 100%;
+}
+
+.logo-small {
+    width: 120px;
+    height: auto;
+    margin-bottom: 1rem;
+    opacity: 0.7;
+}
+
+/* Сетка призов */
+.prizes-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+    margin-top: 4rem;
+}
+
+.prize-card {
+    text-align: center;
+    background-color: #2a2a2a;
+    padding: 2rem;
+}
+
+.prize-image {
+    width: 200px;
+    height: 150px;
+    object-fit: contain;
+    margin-bottom: 1rem;
+}
+
+.prize-place {
+    font-size: 2.5rem;
+    margin-bottom: 0.5rem;
+}
+
+.prize-name {
+    font-size: 1.2rem;
+    color: #ffffff;
+    margin: 0;
+}
+
+/* Футер */
+footer {
+    margin-top: 6rem;
+    padding-top: 3rem;
+    text-align: center;
+}
+
+/* Анимации появления при скролле */
+.scroll-animate {
+    opacity: 0;
+    transform: translateX(100px);
+    transition: all 0.8s ease;
+}
+
+.scroll-animate.visible {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+/* ФИКС: Анимация фигур - СЛАЙД ИЗ СПРАВА С МЕНЬШЕЙ ЗАДЕРЖКОЙ */
+.scroll-animate.visible .highlight::before {
+    animation: shapeSlideIn 0.8s ease 0.3s forwards;
+}
+
+@keyframes shapeSlideIn {
+    0% {
+        opacity: 0;
+        transform: skew(-12deg) translateX(80px);
+    }
+    100% {
+        opacity: 1;
+        transform: skew(-12deg) translateX(0);
+    }
+}
+
 /* Стили для кастомной формы */
 .custom-form-container {
     max-width: 600px;
@@ -87,8 +274,78 @@
     margin: 0;
 }
 
-/* Адаптивность для формы */
+/* Отключение анимаций для пользователей, которые их предпочитают не использовать */
+@media (prefers-reduced-motion: reduce) {
+    .scroll-animate {
+        opacity: 1;
+        transform: none;
+        transition: none;
+    }
+    
+    .scroll-animate.visible .highlight::before {
+        animation: none;
+        opacity: 1;
+        transform: skew(-12deg) translateX(0);
+    }
+}
+
+/* Адаптивность */
 @media (max-width: 768px) {
+    body {
+        padding: 30px 15px;
+    }
+    
+    h1 {
+        font-size: 3.5rem;
+    }
+    
+    h2 {
+        font-size: 2.5rem;
+        margin: 3rem 0 1.5rem 0;
+    }
+    
+    h3 {
+        font-size: 2.5rem;
+    }
+    
+    .highlight {
+        padding: 0.2rem 0.8rem;
+    }
+    
+    .scroll-animate {
+        transform: translateX(50px);
+    }
+    
+    .highlight::before {
+        transform: skew(-12deg) translateX(50px);
+    }
+    
+    /* Адаптивность для логотипа */
+    .logo-header {
+        width: 300px;
+        margin-bottom: 2rem;
+    }
+    
+    .logo-small {
+        width: 80px;
+    }
+    
+    /* Адаптивность для призов */
+    .prizes-grid {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+    }
+    
+    .prize-image {
+        width: 150px;
+        height: 120px;
+    }
+    
+    .prize-place {
+        font-size: 2rem;
+    }
+    
+    /* Адаптивность для формы */
     .custom-form-container {
         padding: 1.5rem;
     }
