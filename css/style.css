@@ -156,6 +156,110 @@ p {
     padding: 2rem;
 }
 
+/* Стили для кастомной формы */
+.custom-form-container {
+    max-width: 600px;
+    margin: 0 auto;
+    background-color: #2a2a2a;
+    padding: 2.5rem;
+}
+
+.warpoint-form {
+    width: 100%;
+}
+
+.form-field {
+    margin-bottom: 1.5rem;
+}
+
+.field-label {
+    display: block;
+    font-family: 'Gilroy', sans-serif;
+    font-size: 1.1rem;
+    color: #ffffff;
+    margin-bottom: 0.5rem;
+    font-weight: 500;
+}
+
+.warpoint-input {
+    width: 100%;
+    padding: 12px;
+    background-color: #1b1b1b;
+    border: 2px solid #3a3a3a;
+    color: #ffffff;
+    font-family: 'Gilroy', sans-serif;
+    font-size: 1rem;
+    transition: border-color 0.3s ease;
+}
+
+.warpoint-input:focus {
+    outline: none;
+    border-color: #e23239;
+}
+
+.warpoint-input:invalid {
+    border-color: #e23239;
+}
+
+/* Кнопка отправки в виде параллелограмма */
+.warpoint-submit-btn {
+    width: 100%;
+    background-color: #e23239;
+    transform: skew(-12deg);
+    border: none;
+    padding: 1.5rem 2rem;
+    margin-top: 1rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.warpoint-submit-btn:hover:not(:disabled) {
+    background-color: #c4292f;
+    transform: skew(-12deg) translateY(-2px);
+}
+
+.warpoint-submit-btn:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    transform: skew(-12deg);
+}
+
+.btn-text {
+    display: block;
+    font-family: 'Bebas Neue Pro', sans-serif;
+    font-size: 2rem;
+    color: #ffffff;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    transform: skew(12deg);
+    margin: 0;
+}
+
+/* Сообщения */
+.message {
+    padding: 15px;
+    margin: 20px 0;
+    text-align: center;
+    border: 2px solid;
+    display: none;
+}
+
+.message.success {
+    background-color: #1b1b1b;
+    color: #ffffff;
+    border-color: #3970f6;
+    display: block;
+}
+
+.message.error {
+    background-color: #1b1b1b;
+    color: #e23239;
+    border-color: #e23239;
+    display: block;
+}
+
 /* Футер */
 footer {
     margin-top: 6rem;
@@ -265,5 +369,17 @@ footer {
     /* Адаптивность для формы */
     .form-container {
         padding: 1.5rem;
+    }
+    
+    .custom-form-container {
+        padding: 1.5rem;
+    }
+    
+    .warpoint-submit-btn {
+        padding: 1.2rem 1.5rem;
+    }
+    
+    .btn-text {
+        font-size: 1.5rem;
     }
 }
