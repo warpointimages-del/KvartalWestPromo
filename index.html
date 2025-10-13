@@ -25,12 +25,12 @@
             <div class="prize-card" style="text-align: center;">
                 <img src="pics/vr.webp" alt="VR шлем" style="width: 200px; height: 150px; object-fit: contain; margin-bottom: 1rem;">
                 <h3 style="color: #c0c0c0;">2 МЕСТО</h3>
-                <p>VR Шлем Oculus Quest 3S</p>
+                <p>VR шлем</p>
             </div>
             <div class="prize-card" style="text-align: center;">
                 <img src="pics/speaker.webp" alt="Колонка" style="width: 200px; height: 150px; object-fit: contain; margin-bottom: 1rem;">
                 <h3 style="color: #cd7f32;">3 МЕСТО</h3>
-                <p>Яндекс Станция Midi</p>
+                <p>Премиум колонка</p>
             </div>
         </div>
     </header>
@@ -38,31 +38,33 @@
     <!-- Форма регистрации -->
     <section class="registration scroll-animate">
         <h2>ЗАПИСЬ НА <span class="highlight">УЧАСТИЕ</span></h2>
-        <form id="registrationForm" class="registration-form">
-            <div class="form-group">
-                <label for="fullName">ФИО:</label>
-                <input type="text" id="fullName" name="fullName" required 
-                       placeholder="Иванов Иван Иванович">
-            </div>
-            
-            <div class="form-group">
-                <label for="birthDate">Дата рождения:</label>
-                <input type="date" id="birthDate" name="birthDate" required>
-            </div>
-            
-            <div class="form-group">
-                <label for="phone">Номер телефона:</label>
-                <input type="tel" id="phone" name="phone" required 
-                       placeholder="+7 (999) 999-99-99"
-                       pattern="\+7\s?[\(]{0,1}9[0-9]{2}[\)]{0,1}\s?\d{3}[-]{0,1}\d{2}[-]{0,1}\d{2}">
-            </div>
-
-            <button type="submit" id="submitBtn" class="submit-btn">
-                УЧАСТВОВАТЬ В РОЗЫГРЫШЕ
-            </button>
-        </form>
         
+        <!-- Прямая форма Google -->
+        <iframe id="googleForm" 
+                src="https://docs.google.com/forms/d/e/1FAIpQLSfT5rz1pJCS1tlPkT26-gtJ_BIK92m65oivdSuWZHBNtW4jKA/viewform?embedded=true" 
+                width="100%" 
+                height="800" 
+                frameborder="0" 
+                marginheight="0" 
+                marginwidth="0"
+                style="border-radius: 10px;">
+            Загрузка…
+        </iframe>
+
         <div id="message" class="message"></div>
+    </section>
+
+    <!-- Таблица участников -->
+    <section class="participants scroll-animate">
+        <h2>УЧАСТНИКИ <span class="highlight">РОЗЫГРЫША</span></h2>
+        
+        <!-- Встроенная таблица -->
+        <iframe src="https://docs.google.com/spreadsheets/d/e/2PACX-1vQqEd6R1kYR1EwU6E3I0yP8J4p6M5Y6b5q5t5d5f5g5h5i5j5k5l5m5n5o5p5q5r5s5t5u5v5w5x5y5z/pubhtml?gid=0&amp;single=true&amp;widget=true&amp;headers=false"
+                width="100%" 
+                height="600" 
+                frameborder="0"
+                style="border-radius: 10px;">
+        </iframe>
     </section>
 
     <footer class="scroll-animate">
@@ -70,7 +72,6 @@
         <p class="secondary">© 2025 Все права защищены</p>
     </footer>
 
-    <script src="js/form-handler.js"></script>
     <script>
         // Анимация при скролле
         const observer = new IntersectionObserver((entries) => {
@@ -85,10 +86,12 @@
             observer.observe(el);
         });
 
-        // Загрузка таблицы участников при загрузке страницы
-        document.addEventListener('DOMContentLoaded', function() {
-            if (typeof raffleForm !== 'undefined') {
-                raffleForm.loadParticipantsTable();
+        // Обработка отправки формы
+        window.addEventListener('message', function(event) {
+            if (event.data === 'formSubmitted') {
+                document.getElementById('message').textContent = '🎉 Вы успешно зарегистрированы!';
+                document.getElementById('message').className = 'message success';
+                document.getElementById('message').style.display = 'block';
             }
         });
     </script>
