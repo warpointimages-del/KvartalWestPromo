@@ -55,7 +55,7 @@ h2 {
 }
 
 h3 {
-    font-size: 3.5rem;
+    font-size: 2.5rem;
     margin-bottom: 1rem;
 }
 
@@ -150,6 +150,12 @@ p {
     margin: 0;
 }
 
+/* Контейнер формы */
+.form-container {
+    background-color: #2a2a2a;
+    padding: 2rem;
+}
+
 /* Футер */
 footer {
     margin-top: 6rem;
@@ -185,95 +191,6 @@ footer {
     }
 }
 
-/* Стили для кастомной формы */
-.custom-form-container {
-    max-width: 600px;
-    margin: 0 auto;
-    background-color: #2a2a2a;
-    padding: 2.5rem;
-}
-
-.warpoint-form {
-    width: 100%;
-}
-
-.form-header {
-    text-align: center;
-    margin-bottom: 2rem;
-}
-
-.form-title {
-    font-family: 'Bebas Neue Pro', sans-serif;
-    font-size: 3rem;
-    color: #ffffff;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    margin: 0;
-}
-
-.form-field {
-    margin-bottom: 1.5rem;
-}
-
-.field-label {
-    display: block;
-    font-family: 'Gilroy', sans-serif;
-    font-size: 1.1rem;
-    color: #ffffff;
-    margin-bottom: 0.5rem;
-    font-weight: 500;
-}
-
-.warpoint-input {
-    width: 100%;
-    padding: 12px;
-    background-color: #1b1b1b;
-    border: 2px solid #3a3a3a;
-    color: #ffffff;
-    font-family: 'Gilroy', sans-serif;
-    font-size: 1rem;
-    transition: border-color 0.3s ease;
-}
-
-.warpoint-input:focus {
-    outline: none;
-    border-color: #e23239;
-}
-
-.warpoint-input:invalid {
-    border-color: #e23239;
-}
-
-/* Кнопка отправки в виде параллелограмма */
-.warpoint-submit-btn {
-    width: 100%;
-    background-color: #e23239;
-    transform: skew(-12deg);
-    border: none;
-    padding: 1.5rem 2rem;
-    margin-top: 1rem;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    position: relative;
-    overflow: hidden;
-}
-
-.warpoint-submit-btn:hover {
-    background-color: #c4292f;
-    transform: skew(-12deg) translateY(-2px);
-}
-
-.btn-text {
-    display: block;
-    font-family: 'Bebas Neue Pro', sans-serif;
-    font-size: 2rem;
-    color: #ffffff;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    transform: skew(12deg);
-    margin: 0;
-}
-
 /* Отключение анимаций для пользователей, которые их предпочитают не использовать */
 @media (prefers-reduced-motion: reduce) {
     .scroll-animate {
@@ -305,7 +222,7 @@ footer {
     }
     
     h3 {
-        font-size: 2.5rem;
+        font-size: 2rem;
     }
     
     .highlight {
@@ -346,19 +263,7 @@ footer {
     }
     
     /* Адаптивность для формы */
-    .custom-form-container {
+    .form-container {
         padding: 1.5rem;
-    }
-    
-    .form-title {
-        font-size: 2.2rem;
-    }
-    
-    .warpoint-submit-btn {
-        padding: 1.2rem 1.5rem;
-    }
-    
-    .btn-text {
-        font-size: 1.5rem;
     }
 }
