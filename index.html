@@ -63,6 +63,17 @@
         </div>
     </section>
 
+    <!-- Скрытая форма для отправки в Google Forms -->
+    <div style="display: none;">
+        <form id="googleForm" action="https://docs.google.com/forms/d/e/1FAIpQLSfT5rz1pJCS1tlPkT26-gtJ_BIK92m65oivdSuWZHBNtW4jKA/formResponse" method="POST" target="_blank">
+            <input type="text" name="entry.919636716" id="googleName">
+            <input type="text" name="entry.743560137" id="googleDate">
+            <input type="text" name="entry.1371029049" id="googlePhone">
+            <input type="hidden" name="fvv" value="1">
+            <input type="hidden" name="fbzx" value="1725711925197514858">
+        </form>
+    </div>
+
     <footer class="scroll-animate">
         <img src="pics/logo.svg" alt="WARPOINT" class="logo-small">
         <p class="secondary">© 2025 Все права защищены</p>
@@ -82,14 +93,12 @@
             observer.observe(el);
         });
 
-        // URL вашего Google Apps Script (замените на реальный)
-        const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwEznqQZH39IO13Nlv8gtvlLnSyNiMa41qc-tTt62PmSXDYqXnkhWcfXEX_6bII9HM4/exec';
-
         class WarpointForm {
             constructor() {
                 this.form = document.getElementById('warpointForm');
                 this.messageDiv = document.getElementById('message');
                 this.submitBtn = this.form.querySelector('.warpoint-submit-btn');
+                this.googleForm = document.getElementById('googleForm');
                 
                 this.init();
             }
@@ -145,29 +154,39 @@
                 this.setLoading(true);
                 
                 try {
-                    const response = await fetch(SCRIPT_URL, {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'text/plain;charset=utf-8',
-                        },
-                        body: JSON.stringify(formData)
-                    });
+                    // Отправляем данные в Google Forms
+                    document.getElementById('googleName').value = formData.fullName;
+                    document.getElementById('googleDate').value = formData.birthDate;
+                    document.getElementById('googlePhone').value = formData.phone;
                     
-                    const result = await response.json();
+                    // Создаем iframe для отправки
+                    this.submitToGoogleForms();
                     
-                    if (result.success) {
-                        this.showMessage('🎉 Вы успешно зарегистрированы в розыгрыше!', 'success');
-                        this.form.reset();
-                    } else {
-                        this.showMessage('⚠️ Ошибка при отправке. Попробуйте еще раз.', 'error');
-                    }
+                    this.showMessage('🎉 Вы успешно зарегистрированы в розыгрыше!', 'success');
+                    this.form.reset();
                     
                 } catch (error) {
                     console.error('Error:', error);
-                    this.showMessage('🚫 Ошибка сети. Попробуйте еще раз.', 'error');
+                    this.showMessage('🚫 Ошибка отправки. Попробуйте еще раз.', 'error');
                 } finally {
                     this.setLoading(false);
                 }
+            }
+            
+            submitToGoogleForms() {
+                // Создаем временный iframe для отправки формы
+                const tempIframe = document.createElement('iframe');
+                tempIframe.style.display = 'none';
+                tempIframe.name = 'temp-iframe';
+                document.body.appendChild(tempIframe);
+                
+                this.googleForm.target = 'temp-iframe';
+                this.googleForm.submit();
+                
+                // Удаляем iframe через секунду
+                setTimeout(() => {
+                    document.body.removeChild(tempIframe);
+                }, 1000);
             }
             
             validateData(data) {
