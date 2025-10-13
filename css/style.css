@@ -39,17 +39,17 @@ body {
     justify-content: center;
     gap: 2rem;
     margin-bottom: 3rem;
-    flex-wrap: wrap;
+    flex-wrap: nowrap;
 }
 
 .logo-kvartal {
-    width: 300px;
-    height: auto;
+    height: 80px;
+    width: auto;
 }
 
 .logo-warpoint {
-    width: 250px;
-    height: auto;
+    height: 80px;
+    width: auto;
 }
 
 /* Заголовки с Bebas Neue */
@@ -337,14 +337,15 @@ footer {
     .header-logos {
         gap: 1.5rem;
         margin-bottom: 2rem;
+        flex-wrap: nowrap;
     }
     
     .logo-kvartal {
-        width: 200px;
+        height: 60px;
     }
     
     .logo-warpoint {
-        width: 180px;
+        height: 60px;
     }
     
     h1 {
@@ -412,16 +413,16 @@ footer {
 
 @media (max-width: 480px) {
     .header-logos {
-        flex-direction: column;
         gap: 1rem;
+        flex-wrap: nowrap;
     }
     
     .logo-kvartal {
-        width: 180px;
+        height: 50px;
     }
     
     .logo-warpoint {
-        width: 160px;
+        height: 50px;
     }
     
     h1 {
@@ -430,5 +431,19 @@ footer {
     
     h2 {
         font-size: 2.2rem;
+    }
+}
+
+@media (max-width: 360px) {
+    .header-logos {
+        gap: 0.8rem;
+    }
+    
+    .logo-kvartal {
+        height: 45px;
+    }
+    
+    .logo-warpoint {
+        height: 45px;
     }
 }
