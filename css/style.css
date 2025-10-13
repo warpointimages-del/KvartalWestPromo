@@ -78,12 +78,6 @@ p {
     margin-bottom: 3rem;
 }
 
-.form-description {
-    text-align: center;
-    margin-bottom: 3rem;
-    color: #9c9c9c;
-}
-
 /* Правильная фигура параллелограмма */
 .highlight {
     position: relative;
@@ -136,7 +130,7 @@ p {
     text-align: center;
     background-color: #2a2a2a;
     padding: 2rem;
-    border: 2px solid #3a3a3a;
+    /* Убрал все рамки - чистый фон */
 }
 
 .prize-image {
@@ -157,94 +151,45 @@ p {
     margin: 0;
 }
 
-/* Кастомная форма */
-.custom-form {
-    max-width: 500px;
-    margin: 0 auto;
-    background-color: #2a2a2a;
-    padding: 2.5rem;
-    border: 2px solid #3a3a3a;
+/* Кнопка участвовать */
+.form-button-container {
+    text-align: center;
+    margin-top: 3rem;
 }
 
-.form-group {
-    margin-bottom: 1.5rem;
+.participate-btn {
+    display: inline-block;
+    position: relative;
+    text-decoration: none;
+    padding: 1.5rem 3rem;
+    background-color: #e23239;
+    transform: skew(-12deg);
+    transition: all 0.3s ease;
 }
 
-.form-group label {
+.participate-btn:hover {
+    background-color: #c4292f;
+    transform: skew(-12deg) translateY(-2px);
+}
+
+.btn-text {
     display: block;
-    margin-bottom: 0.5rem;
-    color: #ffffff;
-    font-weight: 500;
-    font-family: 'Gilroy', sans-serif;
-}
-
-.form-group input {
-    width: 100%;
-    padding: 12px;
-    background-color: #1b1b1b;
-    border: 2px solid #3a3a3a;
-    color: #ffffff;
-    font-size: 1rem;
-    font-family: 'Gilroy', sans-serif;
-    transition: border-color 0.3s ease;
-}
-
-.form-group input:focus {
-    outline: none;
-    border-color: #3970f6;
-}
-
-.form-group input:invalid {
-    border-color: #e23239;
-}
-
-.submit-btn {
-    width: 100%;
-    background: linear-gradient(135deg, #3970f6, #e23239);
-    color: white;
-    border: none;
-    padding: 15px 30px;
-    font-size: 1.1rem;
-    cursor: pointer;
-    transition: transform 0.2s ease;
     font-family: 'Bebas Neue Pro', sans-serif;
+    font-size: 2rem;
+    color: #ffffff;
     text-transform: uppercase;
     letter-spacing: 1px;
-    border: 2px solid transparent;
+    transform: skew(12deg);
 }
 
-.submit-btn:hover:not(:disabled) {
-    transform: translateY(-2px);
-    border: 2px solid #ffffff;
+/* Google Forms стилизация */
+#iframe {
+    background-color: #2a2a2a !important;
 }
 
-.submit-btn:disabled {
-    opacity: 0.6;
-    cursor: not-allowed;
-    transform: none;
-}
-
-/* Стили для сообщений */
-.message {
-    padding: 15px;
-    margin: 20px 0;
-    text-align: center;
-    display: none;
-    border: 2px solid;
-}
-
-.message.success {
-    background: #1b1b1b;
-    color: #ffffff;
-    border-color: #3970f6;
-    display: block;
-}
-
-.message.error {
-    background: #1b1b1b;
-    color: #e23239;
-    border-color: #e23239;
-    display: block;
+/* Стили для Google Forms элементов */
+form {
+    background-color: #2a2a2a !important;
 }
 
 /* Футер */
@@ -252,7 +197,6 @@ footer {
     margin-top: 6rem;
     padding-top: 3rem;
     text-align: center;
-    border-top: 2px solid #3a3a3a;
 }
 
 /* Анимации появления при скролле */
@@ -354,8 +298,76 @@ footer {
         font-size: 2rem;
     }
     
-    /* Адаптивность для формы */
-    .custom-form {
-        padding: 1.5rem;
+    /* Адаптивность для кнопки */
+    .participate-btn {
+        padding: 1.2rem 2rem;
     }
+    
+    .btn-text {
+        font-size: 1.5rem;
+    }
+}
+
+/* Стилизация Google Forms */
+#googleForm {
+    background-color: #2a2a2a !important;
+    border: none !important;
+}
+
+/* Переопределение стилей Google Forms */
+.freebirdFormviewerViewFormContent {
+    background-color: #2a2a2a !important;
+}
+
+.freebirdFormviewerViewCenteredContent {
+    background-color: #2a2a2a !important;
+}
+
+.freebirdFormviewerViewFormCard {
+    background-color: #2a2a2a !important;
+    border: none !important;
+}
+
+/* Заголовки формы */
+.freebirdFormviewerViewHeaderHeader {
+    color: #ffffff !important;
+    font-family: 'Bebas Neue Pro', sans-serif !important;
+}
+
+/* Описание формы */
+.freebirdFormviewerViewHeaderDescription {
+    color: #9c9c9c !important;
+}
+
+/* Поля ввода */
+.freebirdFormviewerViewItemsTextItem {
+    background-color: #1b1b1b !important;
+}
+
+.quantumWizTextinputPaperinputInput {
+    color: #ffffff !important;
+    background-color: #1b1b1b !important;
+    border: 2px solid #3a3a3a !important;
+}
+
+.quantumWizTextinputPaperinputInput:focus {
+    border-color: #e23239 !important;
+}
+
+/* Метки полей */
+.docssharedWizToggleLabeledLabelText {
+    color: #ffffff !important;
+    font-family: 'Gilroy', sans-serif !important;
+}
+
+/* Кнопка отправки */
+.freebirdFormviewerViewNavigationLeftButtons {
+    background-color: #e23239 !important;
+}
+
+.quantumWizButtonPaperbuttonLabel {
+    color: #ffffff !important;
+    font-family: 'Bebas Neue Pro', sans-serif !important;
+    font-size: 1.2rem !important;
+    text-transform: uppercase !important;
 }
