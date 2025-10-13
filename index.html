@@ -41,7 +41,7 @@
             <form id="warpointForm" class="warpoint-form">
                 <div class="form-field">
                     <label for="fullName" class="field-label">ФИО *</label>
-                    <input type="text" id="fullName" required class="warpoint-input" placeholder="Иванов Иван Иванович">
+                    <input type="text" id="fullName" required class="warpoint-input" placeholder="Фамилия Имя Отчество">
                 </div>
 
                 <div class="form-field">
@@ -162,12 +162,12 @@
                     // Создаем iframe для отправки
                     this.submitToGoogleForms();
                     
-                    this.showMessage('🎉 Вы успешно зарегистрированы в розыгрыше!', 'success');
+                    this.showMessage('ВЫ УСПЕШНО ЗАРЕГИСТРИРОВАНЫ В РОЗЫГРЫШЕ!', 'success');
                     this.form.reset();
                     
                 } catch (error) {
                     console.error('Error:', error);
-                    this.showMessage('🚫 Ошибка отправки. Попробуйте еще раз.', 'error');
+                    this.showMessage('ОШИБКА ОТПРАВКИ. ПОПРОБУЙТЕ ЕЩЁ РАЗ.', 'error');
                 } finally {
                     this.setLoading(false);
                 }
@@ -191,12 +191,12 @@
             
             validateData(data) {
                 if (data.fullName.length < 2) {
-                    this.showMessage('✏️ Введите корректное ФИО', 'error');
+                    this.showMessage('ВВЕДИТЕ КОРРЕКТНОЕ ФИО', 'error');
                     return false;
                 }
                 
                 if (!data.birthDate) {
-                    this.showMessage('📅 Введите дату рождения', 'error');
+                    this.showMessage('ВВЕДИТЕ ДАТУ РОЖДЕНИЯ', 'error');
                     return false;
                 }
                 
@@ -211,12 +211,12 @@
                 }
                 
                 if (age < 13) {
-                    this.showMessage('🔞 Для участия необходимо быть старше 13 лет', 'error');
+                    this.showMessage('ДЛЯ УЧАСТИЯ НЕОБХОДИМО БЫТЬ СТАРШЕ 13 ЛЕТ', 'error');
                     return false;
                 }
                 
                 if (data.phone.length !== 11) {
-                    this.showMessage('📱 Введите корректный номер телефона', 'error');
+                    this.showMessage('ВВЕДИТЕ КОРРЕКТНЫЙ НОМЕР ТЕЛЕФОНА', 'error');
                     return false;
                 }
                 
@@ -226,7 +226,7 @@
             setLoading(loading) {
                 this.submitBtn.disabled = loading;
                 const btnText = this.submitBtn.querySelector('.btn-text');
-                btnText.textContent = loading ? '⏳ ОТПРАВКА...' : 'УЧАСТВОВАТЬ В РОЗЫГРЫШЕ';
+                btnText.textContent = loading ? 'ОТПРАВКА...' : 'УЧАСТВОВАТЬ В РОЗЫГРЫШЕ';
             }
             
             showMessage(text, type) {
