@@ -39,16 +39,45 @@
     <section class="registration scroll-animate">
         <h2>ЗАПИСЬ НА <span class="highlight">УЧАСТИЕ</span></h2>
         
-        <!-- Google Forms -->
-        <iframe id="googleForm" 
-                src="https://docs.google.com/forms/d/e/1FAIpQLSfT5rz1pJCS1tlPkT26-gtJ_BIK92m65oivdSuWZHBNtW4jKA/viewform?embedded=true" 
-                width="100%" 
-                height="800" 
-                frameborder="0" 
-                marginheight="0" 
-                marginwidth="0">
-            Загрузка…
-        </iframe>
+        <!-- Кастомная стилизованная форма -->
+        <div class="custom-form-container">
+            <form action="https://docs.google.com/forms/u/0/d/e/1FAIpQLSfT5rz1pJCS1tlPkT26-gtJ_BIK92m65oivdSuWZHBNtW4jKA/formResponse" method="POST" target="_blank" class="warpoint-form">
+                
+                <!-- Заголовок формы -->
+                <div class="form-header">
+                    <h3 class="form-title">Розыгрыш KVARTAL WEST</h3>
+                </div>
+
+                <!-- Поле ФИО -->
+                <div class="form-field">
+                    <label for="fullName" class="field-label">ФИО *</label>
+                    <input type="text" name="entry.919636716" id="fullName" required 
+                           class="warpoint-input" placeholder="Введите ваше ФИО">
+                </div>
+
+                <!-- Поле Дата рождения -->
+                <div class="form-field">
+                    <label for="birthDate" class="field-label">Дата рождения *</label>
+                    <input type="date" name="entry.743560137" id="birthDate" required 
+                           class="warpoint-input">
+                </div>
+
+                <!-- Поле Телефон -->
+                <div class="form-field">
+                    <label for="phone" class="field-label">Телефон *</label>
+                    <input type="tel" name="entry.1371029049" id="phone" required 
+                           class="warpoint-input" placeholder="+7 (999) 999-99-99">
+                </div>
+
+                <!-- Кнопка отправки -->
+                <button type="submit" class="warpoint-submit-btn">
+                    <span class="btn-text">УЧАСТВОВАТЬ В РОЗЫГРЫШЕ</span>
+                </button>
+
+                <input type="hidden" name="fvv" value="1">
+                <input type="hidden" name="fbzx" value="1725711925197514858">
+            </form>
+        </div>
     </section>
 
     <footer class="scroll-animate">
@@ -68,6 +97,50 @@
 
         document.querySelectorAll('.scroll-animate').forEach(el => {
             observer.observe(el);
+        });
+
+        // Маска для телефона
+        document.getElementById('phone').addEventListener('input', function(e) {
+            let numbers = this.value.replace(/\D/g, '');
+            
+            if (numbers.startsWith('7') || numbers.startsWith('8')) {
+                numbers = '7' + numbers.substring(1);
+            } else if (numbers.startsWith('9')) {
+                numbers = '7' + numbers;
+            }
+            
+            if (numbers.length > 0) {
+                let formatted = '+7 ';
+                if (numbers.length > 1) {
+                    formatted += '(' + numbers.substring(1, 4);
+                }
+                if (numbers.length >= 4) {
+                    formatted += ') ' + numbers.substring(4, 7);
+                }
+                if (numbers.length >= 7) {
+                    formatted += '-' + numbers.substring(7, 9);
+                }
+                if (numbers.length >= 9) {
+                    formatted += '-' + numbers.substring(9, 11);
+                }
+                this.value = formatted;
+            }
+        });
+
+        // Обработка отправки формы
+        document.querySelector('.warpoint-form').addEventListener('submit', function(e) {
+            const phone = document.getElementById('phone').value.replace(/\D/g, '');
+            if (phone.length !== 11) {
+                e.preventDefault();
+                alert('Пожалуйста, введите корректный номер телефона');
+                return false;
+            }
+            
+            // Форма отправится в новом окне на Google Forms
+            setTimeout(() => {
+                alert('🎉 Спасибо за участие! Форма отправлена.');
+                this.reset();
+            }, 1000);
         });
     </script>
 </body>
