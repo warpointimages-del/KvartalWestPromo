@@ -7,8 +7,12 @@
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
+    <!-- Шапка с лого и призами -->
     <header class="scroll-animate">
-        <img src="pics/headerlogo.svg" alt="WARPOINT" class="logo-header">
+        <div class="header-logos">
+            <img src="pics/kvartal.webp" alt="KVARTAL WEST" class="logo-kvartal">
+            <img src="pics/logo.svg" alt="WARPOINT" class="logo-warpoint">
+        </div>
         <div class="header-text">
             <h1>РОЗЫГРЫШ <span class="highlight">ПРИЗОВ</span></h1>
             <p class="subtitle">Участвуй и выиграй крутые призы!</p>
@@ -33,6 +37,7 @@
         </div>
     </header>
 
+    <!-- Остальной код остается без изменений -->
     <section class="registration scroll-animate">
         <h2>ЗАПИСЬ НА <span class="highlight">УЧАСТИЕ</span></h2>
         
@@ -40,17 +45,17 @@
         <div class="custom-form-container">
             <form id="warpointForm" class="warpoint-form">
                 <div class="form-field">
-                    <label for="fullName" class="field-label">ФИО *</label>
-                    <input type="text" id="fullName" required class="warpoint-input" placeholder="Фамилия Имя Отчество">
+                    <label for="fullName" class="field-label">ФИО</label>
+                    <input type="text" id="fullName" required class="warpoint-input" placeholder="Иванов Иван Иванович">
                 </div>
 
                 <div class="form-field">
-                    <label for="birthDate" class="field-label">Дата рождения *</label>
+                    <label for="birthDate" class="field-label">Дата рождения</label>
                     <input type="date" id="birthDate" required class="warpoint-input">
                 </div>
 
                 <div class="form-field">
-                    <label for="phone" class="field-label">Телефон *</label>
+                    <label for="phone" class="field-label">Телефон</label>
                     <input type="tel" id="phone" required class="warpoint-input" placeholder="+7 (999) 999-99-99">
                 </div>
 
@@ -62,17 +67,6 @@
             <div id="message" class="message"></div>
         </div>
     </section>
-
-    <!-- Скрытая форма для отправки в Google Forms -->
-    <div style="display: none;">
-        <form id="googleForm" action="https://docs.google.com/forms/d/e/1FAIpQLSfT5rz1pJCS1tlPkT26-gtJ_BIK92m65oivdSuWZHBNtW4jKA/formResponse" method="POST" target="_blank">
-            <input type="text" name="entry.919636716" id="googleName">
-            <input type="text" name="entry.743560137" id="googleDate">
-            <input type="text" name="entry.1371029049" id="googlePhone">
-            <input type="hidden" name="fvv" value="1">
-            <input type="hidden" name="fbzx" value="1725711925197514858">
-        </form>
-    </div>
 
     <footer class="scroll-animate">
         <img src="pics/logo.svg" alt="WARPOINT" class="logo-small">
@@ -93,12 +87,14 @@
             observer.observe(el);
         });
 
+        // ЗАМЕНИТЕ НА ВАШ URL GOOGLE APPS SCRIPT
+        const SCRIPT_URL = 'https://script.google.com/macros/s/YOUR_SCRIPT_ID/exec';
+
         class WarpointForm {
             constructor() {
                 this.form = document.getElementById('warpointForm');
                 this.messageDiv = document.getElementById('message');
                 this.submitBtn = this.form.querySelector('.warpoint-submit-btn');
-                this.googleForm = document.getElementById('googleForm');
                 
                 this.init();
             }
@@ -154,39 +150,29 @@
                 this.setLoading(true);
                 
                 try {
-                    // Отправляем данные в Google Forms
-                    document.getElementById('googleName').value = formData.fullName;
-                    document.getElementById('googleDate').value = formData.birthDate;
-                    document.getElementById('googlePhone').value = formData.phone;
+                    const response = await fetch(SCRIPT_URL, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'text/plain;charset=utf-8',
+                        },
+                        body: JSON.stringify(formData)
+                    });
                     
-                    // Создаем iframe для отправки
-                    this.submitToGoogleForms();
+                    const result = await response.json();
                     
-                    this.showMessage('ВЫ УСПЕШНО ЗАРЕГИСТРИРОВАНЫ В РОЗЫГРЫШЕ!', 'success');
-                    this.form.reset();
+                    if (result.success) {
+                        this.showMessage(result.message, 'success');
+                        this.form.reset();
+                    } else {
+                        this.showMessage(result.message, 'error');
+                    }
                     
                 } catch (error) {
                     console.error('Error:', error);
-                    this.showMessage('ОШИБКА ОТПРАВКИ. ПОПРОБУЙТЕ ЕЩЁ РАЗ.', 'error');
+                    this.showMessage('ОШИБКА СЕТИ', 'error');
                 } finally {
                     this.setLoading(false);
                 }
-            }
-            
-            submitToGoogleForms() {
-                // Создаем временный iframe для отправки формы
-                const tempIframe = document.createElement('iframe');
-                tempIframe.style.display = 'none';
-                tempIframe.name = 'temp-iframe';
-                document.body.appendChild(tempIframe);
-                
-                this.googleForm.target = 'temp-iframe';
-                this.googleForm.submit();
-                
-                // Удаляем iframe через секунду
-                setTimeout(() => {
-                    document.body.removeChild(tempIframe);
-                }, 1000);
             }
             
             validateData(data) {
@@ -230,11 +216,11 @@
             }
             
             showMessage(text, type) {
-                this.messageDiv.textContent = text;
+                this.messageDiv.innerHTML = `<span class="highlight">${text}</span>`;
                 this.messageDiv.className = `message ${type}`;
                 
                 setTimeout(() => {
-                    this.messageDiv.textContent = '';
+                    this.messageDiv.innerHTML = '';
                     this.messageDiv.className = 'message';
                 }, 5000);
             }
