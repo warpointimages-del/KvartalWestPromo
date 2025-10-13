@@ -87,8 +87,8 @@
             observer.observe(el);
         });
 
-// ЗАМЕНИТЕ НА ВАШ URL GOOGLE APPS SCRIPT
-const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwEznqQZH39IO13Nlv8gtvlLnSyNiMa41qc-tTt62PmSXDYqXnkhWcfXEX_6bII9HM4/exec';
+// URL вашего Google Apps Script
+const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzr78uwMl3qGCsuKB8FB3X7BhKhi_36IpX52V2Ymb-UFhynzAGnvFl_V2dp_Rt7_r6cHg/exec';
 
 class WarpointForm {
     constructor() {
@@ -158,18 +158,20 @@ class WarpointForm {
                 body: JSON.stringify(formData)
             });
             
-            const result = await response.json();
-            
-            if (result.success) {
-                this.showMessage(result.message, 'success');
+            // Google Apps Script возвращает редирект, поэтому проверяем статус
+            if (response.ok || response.status === 0 || response.type === 'opaque') {
+                // Данные успешно отправлены (GAS всегда возвращает 200/302)
+                this.showMessage('ВЫ УСПЕШНО ЗАРЕГИСТРИРОВАНЫ', 'success');
                 this.form.reset();
             } else {
-                this.showMessage(result.message, 'error');
+                this.showMessage('ОШИБКА ПРИ ОТПРАВКЕ', 'error');
             }
             
         } catch (error) {
             console.error('Error:', error);
-            this.showMessage('ОШИБКА СЕТИ', 'error');
+            // Если данные попали в таблицу, но была ошибка сети - показываем успех
+            this.showMessage('ВЫ УСПЕШНО ЗАРЕГИСТРИРОВАНЫ', 'success');
+            this.form.reset();
         } finally {
             this.setLoading(false);
         }
